@@ -63,15 +63,16 @@
 <body>
     <div class="ticket">
         <div class="ticket-header">
-            <h2>PVC Cielo Razos</h2>
-            <h3>GUATICA</h3>
+            <h2> Cielo Razos</h2>
+            <h2>PVC </h2>
+            <h3>Anserma</h3>
             
            <div class="logo">
     <img style="width: 70px;" src="https://www.appsheet.com/Content/img/appicons/other.png" alt="Logo">
-            <h3>Maria Del Carmen Velez</h3>
+            <h3>Adrian Mauricio Florez</h3>
             <div>NIT: 14193384600</div>
             <div>Teléfono: 3104048448</div>
-            <div>Guatica Risaralda</div>
+            <div>GAnserma Clds</div>
             
             
         </div>
@@ -166,6 +167,12 @@
       document.getElementById("Cambio").innerHTML="<?= Cambio ?>";
       
     </script>
-
+<!-- Botón de compartir en la parte superior izquierda -->
+    <div class="btn-compartir" id="btnCompartir">
+        <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Botón Compartir">
+    </div>
+  
+    <!-- Librería para convertir HTML a imagen -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 </body>
