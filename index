@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket de Venta</title>
+    <style>
+        
+        .ticket {
+      font-family: monospace;
+      font-size: 12px;
+      width: 80mm;
+      margin: 0 auto;
+      border: 1px solid #000;
+      padding: 10px;
+    }
+        .ticket {
+            width: 280px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 1px solid #000;
+            font-size: 14px;
+        }
+        table
+       {
+         width: 100%;
+         -collapse: collapse;
+       }
+        th, td
+       {
+        padding: 4px;
+        border: 1px solid #ddd;
+        text-align: left;
+       }
+        .ticket-header, .ticket-footer {
+            text-align: center;
+        }
+        .ticket-header h2, .ticket-footer p {
+            margin: 5px 0;
+        }
+        .divider {
+            border-top: 1px dashed #000;
+            margin: 10px 0;
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+        .item span {
+            flex: 1;
+        }
+        .subtotal, .total {
+            font-weight: bold;
+        }
+        .logo {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <div class="ticket-header">
+            <h2>INNOVACIONES</h2>
+            <h3>GUATICA</h3>
+            
+           <div class="logo">
+    <img style="width: 70px;" src="https://www.appsheet.com/Content/img/appicons/other.png" alt="Logo">
+            <h3>Maria Del Carmen Velez</h3>
+            <div>NIT: 14193384600</div>
+            <div>Teléfono: 3104048448</div>
+            <div>Guatica Risaralda</div>
+            
+            
+        </div>
+        <div class="divider"></div>
+        <div class="ticket-footer">
+          <p style="text-align: right;"><h><b> No.Ticket:</b><h id=NoTicket></h></h> </p>
+        </div>  
+        <div class="divider"></div>
+       <div class="ticket-items">
+            <div class="item">
+              <h><b>Fecha y Hora:</b> <h id=Fecha></h> </h>
+            </div>
+            <div class="item">
+                <h><b>NIT-Cedula:</b><h id=Identificacion></h></h>
+             </div>
+            <div class="item">
+                <h><b>Cliente:</b><h id=NombreCliente></h></h>
+             </div>
+             <div class="item">
+                <h><b>Metodo de pago :</b><h id=FormaPago></h></h>
+             </div>
+            
+            
+               
+        
+   <div class="divider"></div>
+
+    <table>
+        <thead>
+          <tr>
+           <th>Prod</th>
+            <th style="text-align: right;">Cnt</th>
+            <th style="text-align: right;">Valor</th>
+             <th style="text-align: right;">Desc</th>
+            <th style="text-align: right;">total</th>
+          </tr>
+        </thead>
+        <tbody id=DetalleVenta>
+        </tbody>
+    </table>
+ 
+      <div class="item">
+      <span><b>Total Artículos:</b></span>
+      <span id=NArticulos></span>
+    </div>
+    
+  
+        
+        
+  <div class="divider"></div>
+  <div class="ticket-footer">
+     
+   
+      <p style="text-align: right;"><h><b> SubTotal:</b><h id=SubTotal></h></h> </p>
+      <p style="text-align: right;"><h><b> Descuento:</b><h id=Descuento></h></h> </p>
+      <p style="text-align: right;"><h><b>Total:</b><h id=Total></h></h> </p>
+      <p style="text-align: right;"><h><b>Efectivo:</b><h id=Efectivo></h></h> </p>
+      <p style="text-align: right;"><h><b>Cambio:</b><h id=Cambio></h></h> </p>
+  
+            
+               
+            <h5>Gracias por tu compra.</h5>
+            <p>Por favor, guarda este ticket como comprobante de compra. Para cualquier cambio o devolución, será necesario presentar este ticket junto con los productos en su estado original y dentro del plazo establecido en nuestra política de cambios y devoluciones</p>
+            <p>Para cualquier consulta o asistencia adicional, no dudes en contactarnos. Agradecemos tu preferencia y esperamos que disfrutes de tu compra.</p>
+        </div>
+    </div>
+    <script>
+        // Función para imprimir el ticket
+        window.onload = function() {
+            window.print();
+        };
+    </script>
+    </div>
+        <button id="printButton" onclick="printTicket()">Imprimir Ticket</button>
+    </div>
+    <script>
+        function printTicket() {
+            window.print();
+        }
+    <script>
+      document.getElementById("NoTicket").innerHTML="<?= NoTicket ?>";
+      document.getElementById("Fecha").innerHTML="<?= Fecha ?>";
+       document.getElementById("Identificacion").innerHTML="<?= Identificacion ?>";
+      document.getElementById("NombreCliente").innerHTML="<?= NombreCliente ?>";
+      document.getElementById("FormaPago").innerHTML="<?= FormaPago ?>";
+      document.getElementById("DetalleVenta").innerHTML="<?= DetalleVenta ?>";
+      document.getElementById("SubTotal").innerHTML="<?= SubTotal ?>";
+      document.getElementById("NArticulos").innerHTML="<?= NArticulos ?>";
+      document.getElementById("Descuento").innerHTML="<?= Descuento ?>";
+      document.getElementById("Total").innerHTML="<?= Total ?>";
+      document.getElementById("Efectivo").innerHTML="<?= Efectivo ?>";
+      document.getElementById("Cambio").innerHTML="<?= Cambio ?>";
+      
+    </script>
+
+
+</body>
