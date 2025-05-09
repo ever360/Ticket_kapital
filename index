@@ -172,6 +172,11 @@
     }
 
     // Llenar los datos dinámicos
+document.getElementById("CiudadS").innerHTML = "<?= CiudadS ?>";
+document.getElementById("Representante").innerHTML = "<?= Representante ?>";
+document.getElementById("Nit").innerHTML = "<?= Nit ?>";
+document.getElementById("Telefono").innerHTML = "<?= Telefono ?>";
+document.getElementById("Cieudacompleta").innerHTML = "<?= Cieudacompleta ?>";
     document.getElementById("NoTicket").innerHTML = "<?= NoTicket ?>";
     document.getElementById("Fecha").innerHTML = "<?= Fecha ?>";
     document.getElementById("Identificacion").innerHTML = "<?= Identificacion ?>";
