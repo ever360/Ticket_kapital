@@ -205,10 +205,13 @@
 
     // Asignar valores a los campos
         document.getElementById("Ticket").textContent = params.get('Ticket') || "No especificado";
+        document.getElementById("FechaHora").textContent = params.get('FechaHora') || "No especificado";
     // Obtener los valores de los parámetros
         var boleto = params.has('Ticket') ? params.get('boleto') : " no especificado";
+         var boleto = params.has('FechaHora') ? params.get('FechaHora') : " no especificado";
     // Asignar los valores a los elementos HTML
         document.getElementById("Ticket").textContent = Ticket;
+        document.getElementById("FechaHora").textContent = FechaHora;
      </script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
    // imprimir automatco 
