@@ -110,7 +110,7 @@
 
     <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
       <div><b>Fecha y Hora:</b> <span id="Fecha"></span></div>
-      <div><b>No.Ticket:</b> <span id="NoTicket"></span></div>
+      <div><b>No.Ticket:</b> <span id="Ticket"></span></div>
     </div>
 
     <div class="divider"></div>
@@ -167,7 +167,17 @@
     function printTicket() {
       window.print();
     }
+ <script>
+        // Obtener los parámetros de la URL
+        const params = new URLSearchParams(window.location.search);
 
+    // Asignar valores a los campos
+        document.getElementById("Ticket").textContent = params.get('Ticket') || "No especificado";
+    // Obtener los valores de los parámetros
+        var boleto = params.has('Ticket') ? params.get('boleto') : " no especificado";
+    // Asignar los valores a los elementos HTML
+        document.getElementById("Ticket").textContent = Ticket;
+     </script>
     // Insertar datos de ejemplo (estáticos)
     document.getElementById("Fecha").innerText = "2025-05-10 14:32";
     document.getElementById("NoTicket").innerText = "A-001";
