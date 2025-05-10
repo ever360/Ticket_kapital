@@ -84,10 +84,7 @@
   </style>
 </head>
 <body>
-  <div class="ticket">
-    <div class="btn-compartir" id="btnCompartir">
-      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
-    </div>
+ 
 
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
@@ -109,7 +106,7 @@
     <div class="divider"></div>
 
     <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
-      <div><b>Fecha y Hora:</b> <span id="Fecha"></span></div>
+      <div><b>Fecha y Hora:</b> <span id="FechaHora"></span></div>
       <div><b>No.Ticket:</b> <span id="Ticket"></span></div>
     </div>
 
@@ -238,7 +235,7 @@
         document.getElementById("FechaHora").textContent = params.get('FechaHora') || "No especificado";
           document.getElementById("NtiCedula").textContent = params.get('NtiCedula') || "No especificado";
     // Obtener los valores de los parámetros
-        var boleto = params.has('Ticket') ? params.get('boleto') : " no especificado";
+        var boleto = params.has('Ticket') ? params.get('Ticket') : " no especificado";
         var boleto = params.has('FechaHora') ? params.get('FechaHora') : " no especificado";
         var boleto = params.has('NtiCedula') ? params.get('NtiCedula') : " no especificado";
     // Asignar los valores a los elementos HTML
@@ -247,7 +244,7 @@
         document.getElementById("NtiCedula").textContent = NtiCedula;
      </script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-   // imprimir automatco 
+   // imprimir automatico 
   <script>
     window.onload = function() {
         window.print();
