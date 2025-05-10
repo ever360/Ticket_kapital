@@ -199,7 +199,17 @@
     document.getElementById("Efectivo").innerText = "$60,000";
     document.getElementById("Cambio").innerText = "$2,000";
   </script>
+ <script>
+        // Obtener los parámetros de la URL
+        const params = new URLSearchParams(window.location.search);
 
+    // Asignar valores a los campos
+        document.getElementById("Ticket").textContent = params.get('Ticket') || "No especificado";
+    // Obtener los valores de los parámetros
+        var boleto = params.has('Ticket') ? params.get('boleto') : " no especificado";
+    // Asignar los valores a los elementos HTML
+        document.getElementById("Ticket").textContent = Ticket;
+     </script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
    // imprimir automatco 
   <script>
