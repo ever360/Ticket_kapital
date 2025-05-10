@@ -167,20 +167,10 @@
     function printTicket() {
       window.print();
     }
- <script>
-        // Obtener los parámetros de la URL
-        const params = new URLSearchParams(window.location.search);
 
-    // Asignar valores a los campos
-        document.getElementById("Ticket").textContent = params.get('Ticket') || "No especificado";
-    // Obtener los valores de los parámetros
-        var boleto = params.has('Ticket') ? params.get('boleto') : " no especificado";
-    // Asignar los valores a los elementos HTML
-        document.getElementById("Ticket").textContent = Ticket;
-     </script>
     // Insertar datos de ejemplo (estáticos)
     document.getElementById("Fecha").innerText = "2025-05-10 14:32";
-    document.getElementById("NoTicket").innerText = "A-001";
+   
     document.getElementById("Identificacion").innerText = "123456789";
     document.getElementById("NombreCliente").innerText = "Juan Pérez";
     document.getElementById("FormaPago").innerText = "Efectivo";
