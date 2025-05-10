@@ -1,146 +1,206 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Ticket de Pago</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket_kapital</title>
   <style>
-    @media print {
-      body {
-        margin: 0;
-      }
-      .ticket {
-        width: 80mm;
-        font-size: 12px;
-        padding: 10px;
-      }
-      .btn-compartir {
-        display: none;
-      }
-    }
-
-    body {
-      font-family: 'Courier New', monospace;
-      background: white;
-    }
-
     .ticket {
-      width: 80mm;
-      margin: auto;
+      font-family: monospace;
+      font-size: 12px;
+      width: 280px;
+      margin: 0 auto;
+      border: 1px solid #000;
       padding: 10px;
-      box-sizing: border-box;
-      border: 1px dashed #000;
-    }
-
-    .center {
-      text-align: center;
-    }
-
-    .bold {
-      font-weight: bold;
-    }
-
-    .ticket p {
-      margin: 4px 0;
-    }
-
-    .ticket hr {
-      border: none;
-      border-top: 1px dashed black;
-      margin: 5px 0;
+      position: relative;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12px;
     }
 
-    td {
-      padding: 4px 0;
+    th, td {
+      padding: 4px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .ticket-header, .ticket-footer {
+      text-align: center;
+    }
+
+    .ticket-header h2, .ticket-footer p {
+      margin: 5px 0;
+    }
+
+    .divider {
+      border-top: 1px dashed #000;
+      margin: 10px 0;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+    }
+
+    .item span {
+      flex: 1;
+    }
+
+    .subtotal, .total {
+      font-weight: bold;
+    }
+
+    .logo {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .logo img {
+      width: 70px;
+      height: auto;
     }
 
     .btn-compartir {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      background: white;
-      border-radius: 50%;
-      padding: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 25px;
       cursor: pointer;
-      z-index: 1000;
     }
 
     .btn-compartir img {
-      width: 24px;
-      height: 24px;
+      width: 100%;
+      height: auto;
+    }
+
+    #printButton {
+      display: block;
+      margin: 10px auto;
     }
   </style>
 </head>
 <body>
+  <div class="ticket">
+    <div class="btn-compartir" id="btnCompartir">
+      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
+    </div>
 
-<div class="ticket" id="comprobante">
-  <div class="center bold">RENACER</div>
-  <div class="center">Tel: 0981 123 456</div>
-  <hr>
-  <p><strong>Alumno:</strong> Juan Pérez</p>
-  <p><strong>Curso:</strong> 3ro Básico A</p>
-  <p><strong>Fecha:</strong> 10/05/2025</p>
-  <p><strong>Recibo N°:</strong> 001245</p>
-  <hr>
-  <table>
-    <tr>
-      <td>Mensualidad mayo</td>
-      <td style="text-align: right;">Gs. 150.000</td>
-    </tr>
-    <tr>
-      <td>Cuota material</td>
-      <td style="text-align: right;">Gs. 50.000</td>
-    </tr>
-    <tr>
-      <td class="bold">TOTAL</td>
-      <td class="bold" style="text-align: right;">Gs. 200.000</td>
-    </tr>
-  </table>
-  <hr>
-  <div class="center">¡Gracias por su pago!</div>
-</div>
+    <div class="ticket-header">
+      <h2>Cielo Razos</h2>
+      <h2>PVC</h2>
+      <h3>Anserma</h3>
+    </div>
 
-<!-- Botón compartir -->
-<div class="btn-compartir" id="btnCompartir">
-  <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
-</div>
+    <div class="logo">
+      <img src="https://www.appsheet.com/Content/img/appicons/other.png" alt="Logo">
+    </div>
 
-<!-- Librería y scripts -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<script>
-  document.getElementById('btnCompartir').addEventListener('click', function () {
-    const comprobante = document.getElementById('comprobante');
-    html2canvas(comprobante).then(function (canvas) {
-      canvas.toBlob(function (blob) {
-        const file = new File([blob], "ticket.png", { type: "image/png" });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          navigator.share({
-            files: [file],
-            title: 'Comprobante de Pago',
-            text: 'Aquí tienes tu ticket de pago'
-          });
-        } else {
-          alert("Tu navegador no permite compartir este archivo.");
-        }
-      });
-    });
-  });
+    <div class="ticket-header">
+      <h3>Adrian Mauricio Florez</h3>
+      <div>NIT: 14193384600</div>
+      <div>Teléfono: 3104048448</div>
+      <div>Anserma Caldas</div>
+    </div>
 
-  // Imprimir automáticamente
-  window.onload = function () {
-    window.print();
-  };
-</script>
+    <div class="divider"></div>
 
+    <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
+      <div><b>Fecha y Hora:</b> <span id="Fecha"></span></div>
+      <div><b>No.Ticket:</b> <span id="NoTicket"></span></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="ticket-items">
+      <div class="item">
+        <span><b>NIT-Cedula:</b></span> <span id="Identificacion"></span>
+      </div>
+      <div class="item">
+        <span><b>Cliente:</b></span> <span id="NombreCliente"></span>
+      </div>
+      <div class="item">
+        <span><b>Método de pago:</b></span> <span id="FormaPago"></span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Prod</th>
+          <th style="text-align: right;">Cnt</th>
+          <th style="text-align: right;">Valor</th>
+          <th style="text-align: right;">Desc</th>
+          <th style="text-align: right;">Total</th>
+        </tr>
+      </thead>
+      <tbody id="DetalleVenta"></tbody>
+    </table>
+
+    <div class="item">
+      <span><b>Total Artículos:</b></span>
+      <span id="NArticulos"></span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="ticket-footer">
+      <p style="text-align: right;"><b>SubTotal:</b> <span id="SubTotal"></span></p>
+      <p style="text-align: right;"><b>Descuento:</b> <span id="Descuento"></span></p>
+      <p style="text-align: right;"><b>Total:</b> <span id="Total"></span></p>
+      <p style="text-align: right;"><b>Efectivo:</b> <span id="Efectivo"></span></p>
+      <p style="text-align: right;"><b>Cambio:</b> <span id="Cambio"></span></p>
+
+      <h5>Gracias por tu compra.</h5>
+      <p>Por favor, guarda este ticket como comprobante de compra. Para cualquier cambio o devolución, será necesario presentar este ticket junto con los productos en su estado original y dentro del plazo establecido en nuestra política de cambios y devoluciones.</p>
+      <p>Para cualquier consulta o asistencia adicional, no dudes en contactarnos. Agradecemos tu preferencia y esperamos que disfrutes de tu compra.</p>
+    </div>
+  </div>
+
+  <button id="printButton" onclick="printTicket()">Imprimir Ticket</button>
+
+  <script>
+    function printTicket() {
+      window.print();
+    }
+
+    // Insertar datos de ejemplo (estáticos)
+    document.getElementById("Fecha").innerText = "2025-05-10 14:32";
+    document.getElementById("NoTicket").innerText = "A-001";
+    document.getElementById("Identificacion").innerText = "123456789";
+    document.getElementById("NombreCliente").innerText = "Juan Pérez";
+    document.getElementById("FormaPago").innerText = "Efectivo";
+
+    document.getElementById("DetalleVenta").innerHTML = `
+      <tr>
+        <td>Panel PVC</td>
+        <td style="text-align: right;">4</td>
+        <td style="text-align: right;">12,000</td>
+        <td style="text-align: right;">0</td>
+        <td style="text-align: right;">48,000</td>
+      </tr>
+      <tr>
+        <td>Perfil J</td>
+        <td style="text-align: right;">2</td>
+        <td style="text-align: right;">5,000</td>
+        <td style="text-align: right;">0</td>
+        <td style="text-align: right;">10,000</td>
+      </tr>
+    `;
+
+    document.getElementById("NArticulos").innerText = "6";
+    document.getElementById("SubTotal").innerText = "$58,000";
+    document.getElementById("Descuento").innerText = "$0";
+    document.getElementById("Total").innerText = "$58,000";
+    document.getElementById("Efectivo").innerText = "$60,000";
+    document.getElementById("Cambio").innerText = "$2,000";
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </body>
 </html>
-
 
