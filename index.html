@@ -116,7 +116,7 @@
     <div class="divider"></div>
     <div class="ticket-items">
       <div class="item">
-        <span><b>NIT-Cedula:</b></span> <span id="Identificacion"></span>
+        <span><b>NIT-Cedula:</b></span> <span id="NtiCedula"></span>
       </div>
       <div class="item">
         <span><b>Cliente:</b></span> <span id="NombreCliente"></span>
@@ -169,7 +169,7 @@
     }
 
     // Insertar datos de ejemplo (estáticos)
-    document.getElementById("Fecha").innerText = "2025-05-10 14:32";
+    
    
     document.getElementById("Identificacion").innerText = "123456789";
     document.getElementById("NombreCliente").innerText = "Juan Pérez";
@@ -206,12 +206,15 @@
     // Asignar valores a los campos
         document.getElementById("Ticket").textContent = params.get('Ticket') || "No especificado";
         document.getElementById("FechaHora").textContent = params.get('FechaHora') || "No especificado";
+          document.getElementById("NtiCedula").textContent = params.get('NtiCedula') || "No especificado";
     // Obtener los valores de los parámetros
         var boleto = params.has('Ticket') ? params.get('boleto') : " no especificado";
-         var boleto = params.has('FechaHora') ? params.get('FechaHora') : " no especificado";
+        var boleto = params.has('FechaHora') ? params.get('FechaHora') : " no especificado";
+        var boleto = params.has('NtiCedula') ? params.get('NtiCedula') : " no especificado";
     // Asignar los valores a los elementos HTML
         document.getElementById("Ticket").textContent = Ticket;
         document.getElementById("FechaHora").textContent = FechaHora;
+        document.getElementById("NtiCedula").textContent = NtiCedula;
      </script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
    // imprimir automatco 
