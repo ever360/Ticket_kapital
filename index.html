@@ -1,255 +1,147 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ticket_kapital</title>
+  <title>Ticket de Venta</title>
   <style>
-    .ticket {
-      font-family: monospace;
+    body {
+      font-family: 'Courier New', monospace;
       font-size: 12px;
-      width: 280px;
+      width: 80mm;
       margin: 0 auto;
-      border: 1px solid #000;
-      padding: 10px;
-      position: relative;
     }
-
+    h2, h3, h4 {
+      text-align: center;
+      margin: 4px 0;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 4px;
-      border: 1px solid #ddd;
-      text-align: left;
-    }
-
-    .ticket-header, .ticket-footer {
-      text-align: center;
-    }
-
-    .ticket-header h2, .ticket-footer p {
-      margin: 5px 0;
-    }
-
-    .divider {
-      border-top: 1px dashed #000;
-      margin: 10px 0;
-    }
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 3px;
-    }
-
-    .item span {
-      flex: 1;
-    }
-
-    .subtotal, .total {
-      font-weight: bold;
-    }
-
-    .logo {
-      text-align: center;
       margin-top: 10px;
     }
-
-    .logo img {
-      width: 70px;
-      height: auto;
+    th, td {
+      padding: 2px 4px;
     }
-
-    .btn-compartir {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      width: 25px;
-      cursor: pointer;
+    th {
+      text-align: left;
+      border-bottom: 1px solid #000;
     }
-
-    .btn-compartir img {
-      width: 100%;
-      height: auto;
+    .right {
+      text-align: right;
     }
-
-    #printButton {
-      display: block;
-      margin: 10px auto;
+    .total {
+      font-weight: bold;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
- 
+  <h2>EMPRESA DEMO</h2>
+  <h4>NIT: 123456789</h4>
+  <h4>Dirección: Calle Principal #123</h4>
+  <h4>Tel: 555-123456</h4>
+  <hr>
 
-    <div class="ticket-header">
-      <h2>Cielo Razos</h2>
-      <h2>PVC</h2>
-      <h3>Anserma</h3>
-    </div>
+  <p><strong>Ticket:</strong> <span id="Ticket"></span></p>
+  <p><strong>Fecha:</strong> <span id="Fecha"></span></p>
+  <p><strong>Cédula/NIT:</strong> <span id="NtiCedula"></span></p>
+  <p><strong>Cliente:</strong> <span id="NombreCliente"></span></p>
+  <p><strong>Forma de pago:</strong> <span id="FormaPago"></span></p>
 
-    <div class="logo">
-      <img src="https://www.appsheet.com/Content/img/appicons/other.png" alt="Logo">
-    </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th class="right">Cant</th>
+        <th class="right">Valor</th>
+        <th class="right">Desc</th>
+        <th class="right">Total</th>
+      </tr>
+    </thead>
+    <tbody id="DetalleVenta"></tbody>
+  </table>
 
-    <div class="ticket-header">
-      <h3>Adrian Mauricio Florez</h3>
-      <div>NIT: 14193384600</div>
-      <div>Teléfono: 3104048448</div>
-      <div>Anserma Caldas</div>
-    </div>
+  <table>
+    <tr>
+      <td>Subtotal</td>
+      <td class="right" id="SubTotal"></td>
+    </tr>
+    <tr>
+      <td>Descuento</td>
+      <td class="right" id="Descuento"></td>
+    </tr>
+    <tr class="total">
+      <td>Total</td>
+      <td class="right" id="Total"></td>
+    </tr>
+    <tr>
+      <td>Efectivo</td>
+      <td class="right" id="Efectivo"></td>
+    </tr>
+    <tr>
+      <td>Cambio</td>
+      <td class="right" id="Cambio"></td>
+    </tr>
+    <tr>
+      <td># Artículos</td>
+      <td class="right" id="NArticulos"></td>
+    </tr>
+  </table>
 
-    <div class="divider"></div>
-
-    <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
-      <div><b>Fecha y Hora:</b> <span id="FechaHora"></span></div>
-      <div><b>No.Ticket:</b> <span id="Ticket"></span></div>
-    </div>
-
-    <div class="divider"></div>
-    <div class="ticket-items">
-      <div class="item">
-        <span><b>NIT-Cedula:</b></span> <span id="NtiCedula"></span>
-      </div>
-      <div class="item">
-        <span><b>Cliente:</b></span> <span id="NombreCliente"></span>
-      </div>
-      <div class="item">
-        <span><b>Método de pago:</b></span> <span id="FormaPago"></span>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Prod</th>
-          <th style="text-align: right;">Cnt</th>
-          <th style="text-align: right;">Valor</th>
-          <th style="text-align: right;">Desc</th>
-          <th style="text-align: right;">Total</th>
-        </tr>
-      </thead>
-      <tbody id="DetalleVenta"></tbody>
-    </table>
-
-    <div class="item">
-      <span><b>Total Artículos:</b></span>
-      <span id="NArticulos"></span>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="ticket-footer">
-      <p style="text-align: right;"><b>SubTotal:</b> <span id="SubTotal"></span></p>
-      <p style="text-align: right;"><b>Descuento:</b> <span id="Descuento"></span></p>
-      <p style="text-align: right;"><b>Total:</b> <span id="Total"></span></p>
-      <p style="text-align: right;"><b>Efectivo:</b> <span id="Efectivo"></span></p>
-      <p style="text-align: right;"><b>Cambio:</b> <span id="Cambio"></span></p>
-
-      <h5>Gracias por tu compra.</h5>
-      <p>Por favor, guarda este ticket como comprobante de compra. Para cualquier cambio o devolución, será necesario presentar este ticket junto con los productos en su estado original y dentro del plazo establecido en nuestra política de cambios y devoluciones.</p>
-      <p>Para cualquier consulta o asistencia adicional, no dudes en contactarnos. Agradecemos tu preferencia y esperamos que disfrutes de tu compra.</p>
-    </div>
+  <div class="footer">
+    <p>Gracias por su compra</p>
+    <p>¡Vuelva pronto!</p>
   </div>
 
-   <!-- Botón de compartir en la parte superior izquierda -->
-    <div class="btn-compartir" id="btnCompartir">
-        <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Botón Compartir">
-    </div>
-  
-    <!-- Librería para convertir HTML a imagen -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
-    <script>
-        document.getElementById('btnCompartir').addEventListener('click', function() {
-            const facturaElement = document.querySelector('.invoice-container');
-
-            html2canvas(facturaElement).then(function(canvas) {
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], "factura.png", { type: "image/png" });
-
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({
-                            files: [file],
-                            title: 'Comprobante de Pago',
-                            text: 'Aquí tienes tu comprobante de pago.',
-                        })
-                        .then(() => console.log('Compartido correctamente.'))
-                        .catch((error) => console.log('Error al compartir:', error));
-                    } else {
-                        alert("Tu navegador no soporta la API de compartición.");
-                    }
-                });
-            });
-        });
-    </script>
-
   <script>
-    function printTicket() {
-      window.print();
-    }
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
 
-    // Insertar datos de ejemplo (estáticos)
-    
-   
-    document.getElementById("Identificacion").innerText = "123456789";
-    document.getElementById("NombreCliente").innerText = "Juan Pérez";
-    document.getElementById("FormaPago").innerText = "Efectivo";
+      const fields = {
+        Ticket: 'Ticket',
+        Fecha: 'Fecha',
+        NtiCedula: 'NtiCedula',
+        NombreCliente: 'NombreCliente',
+        FormaPago: 'FormaPago',
+        SubTotal: 'SubTotal',
+        Descuento: 'Descuento',
+        Total: 'Total',
+        Efectivo: 'Efectivo',
+        Cambio: 'Cambio',
+        NArticulos: 'NArticulos',
+      };
 
-    document.getElementById("DetalleVenta").innerHTML = `
-      <tr>
-        <td>Panel PVC</td>
-        <td style="text-align: right;">4</td>
-        <td style="text-align: right;">12,000</td>
-        <td style="text-align: right;">0</td>
-        <td style="text-align: right;">48,000</td>
-      </tr>
-      <tr>
-        <td>Perfil J</td>
-        <td style="text-align: right;">2</td>
-        <td style="text-align: right;">5,000</td>
-        <td style="text-align: right;">0</td>
-        <td style="text-align: right;">10,000</td>
-      </tr>
-    `;
+      for (const [param, id] of Object.entries(fields)) {
+        const value = params.get(param);
+        if (value !== null) {
+          const el = document.getElementById(id);
+          if (el) el.textContent = value;
+        }
+      }
 
-    document.getElementById("NArticulos").innerText = "6";
-    document.getElementById("SubTotal").innerText = "$58,000";
-    document.getElementById("Descuento").innerText = "$0";
-    document.getElementById("Total").innerText = "$58,000";
-    document.getElementById("Efectivo").innerText = "$60,000";
-    document.getElementById("Cambio").innerText = "$2,000";
+      // DetalleVenta como JSON codificado
+      const detalleParam = params.get('DetalleVenta');
+      if (detalleParam) {
+        try {
+          const detalle = JSON.parse(decodeURIComponent(detalleParam));
+          const tbody = document.getElementById('DetalleVenta');
+          tbody.innerHTML = detalle.map(item => `
+            <tr>
+              <td>${item.producto}</td>
+              <td class="right">${item.cantidad}</td>
+              <td class="right">${item.valor}</td>
+              <td class="right">${item.descuento}</td>
+              <td class="right">${item.total}</td>
+            </tr>
+          `).join('');
+        } catch (error) {
+          console.error('Error al procesar DetalleVenta:', error);
+        }
+      }
+    });
   </script>
- <script>
-        // Obtener los parámetros de la URL
-        const params = new URLSearchParams(window.location.search);
-
-    // Asignar valores a los campos
-        document.getElementById("Ticket").textContent = params.get('Ticket') || "No especificado";
-        document.getElementById("FechaHora").textContent = params.get('FechaHora') || "No especificado";
-          document.getElementById("NtiCedula").textContent = params.get('NtiCedula') || "No especificado";
-    // Obtener los valores de los parámetros
-        var boleto = params.has('Ticket') ? params.get('Ticket') : " no especificado";
-        var boleto = params.has('FechaHora') ? params.get('FechaHora') : " no especificado";
-        var boleto = params.has('NtiCedula') ? params.get('NtiCedula') : " no especificado";
-    // Asignar los valores a los elementos HTML
-        document.getElementById("Ticket").textContent = Ticket;
-        document.getElementById("FechaHora").textContent = FechaHora;
-        document.getElementById("NtiCedula").textContent = NtiCedula;
-     </script>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-   // imprimir automatico 
-  <script>
-    window.onload = function() {
-        window.print();
-    }
-</script>
 </body>
 </html>
-
