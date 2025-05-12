@@ -76,13 +76,8 @@
       height: auto;
     }
 
-     .invoice-container {
-            width: 100%; /* Asegura que ocupe todo el ancho de la página en impresión */
-            height: auto; /* Deja que el contenido determine la altura */
-            box-shadow: none; /* Elimina la sombra durante la impresión */
-            padding: 0; /* Elimina el padding extra al imprimir */
-            margin: 0; /* Elimina márgenes al imprimir */
-        }
+     
+    
     #printButton {
       display: block;
       margin: 10px auto;
@@ -102,7 +97,7 @@
 
     <script>
         document.getElementById('btnCompartir').addEventListener('click', function() {
-            const facturaElement = document.querySelector('.invoice-container');
+            const facturaElement = document.querySelector('.ticket');
 
             html2canvas(facturaElement).then(function(canvas) {
                 canvas.toBlob(function(blob) {
@@ -125,7 +120,7 @@
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.5</h2>
+      <h2>PVC 1.6</h2>
       <h3>Anserma</h3>
     </div>
 
