@@ -120,7 +120,7 @@
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.7</h2>
+      <h2>PVC 1.8</h2>
       <h3>Anserma</h3>
     </div>
 
@@ -197,18 +197,12 @@
       window.print();
     }
 
-    <script>
-  function getParam(name) {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(name);
-  }
-
-  document.getElementById("Fecha").innerText = getParam("fecha");
-  document.getElementById("NoTicket").innerText = getParam("ticket");
-  document.getElementById("Identificacion").innerText = getParam("id");
-  document.getElementById("NombreCliente").innerText = getParam("cliente");
-  document.getElementById("FormaPago").innerText = getParam("pago");
-</script>
+// Insertar datos de ejemplo (estáticos)
+    document.getElementById("Fecha").innerText = "2025-05-10 14:32";
+    document.getElementById("NoTicket").innerText = "A-001";
+    document.getElementById("Identificacion").innerText = "123456789";
+    document.getElementById("NombreCliente").innerText = "Juan Pérez";
+    document.getElementById("FormaPago").innerText = "Efectivo"; no quiero que sean estaticos los voy a traer desd appsheet
 
     document.getElementById("DetalleVenta").innerHTML = `
       <tr>
