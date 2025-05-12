@@ -92,7 +92,7 @@
 
     <script>
         document.getElementById('btnCompartir').addEventListener('click', function() {
-            const facturaElement = document.querySelector('.invoice-container');
+            const facturaElement = document.querySelector('.ticket');
 
             html2canvas(facturaElement).then(function(canvas) {
                 canvas.toBlob(function(blob) {
@@ -115,7 +115,7 @@
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.0</h2>
+      <h2>PVC 1.1</h2>
       <h3>Anserma</h3>
     </div>
 
