@@ -120,7 +120,7 @@
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.9</h2>
+      <h2>PVC 1.0</h2>
       <h3>Anserma</h3>
     </div>
 
@@ -229,8 +229,7 @@
     document.getElementById("Efectivo").innerText = "$60,000";
     document.getElementById("Cambio").innerText = "$2,000";
 
-    // 👉 Llamar automáticamente al abrir la página
-  printTicket();
+   
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -240,20 +239,22 @@
 
         // Asignar valores a los campos
         document.getElementById("NoTicket").textContent = params.get('NoTicket') || "NoTicket no especificado";
-        document.getElementById("nombreArrendatario").textContent = params.get('cliente') || "Cliente no especificado";
+        document.getElementById("cliente").textContent = params.get('cliente') || "Cliente no especificado";
         
         
          
         
         // Obtener los valores de los parámetros
         var boleto = params.has('NoTicket') ? params.get('NoTicket') : "NoTicket no especificado";
-        var fechaPago = params.has('fechaPago') ? params.get('fechaPago') : "fechaPago no especificado";
+        var fechaPago = params.has('cliente') ? params.get('cliente') : "cliente no especificado";
         
 
         // Asignar los valores a los elementos HTML
         document.getElementById("NoTicket").textContent = NoTicket;
-        document.getElementById("fechaPago").textContent = fechaPago;
-       
+        document.getElementById("cliente").textContent = cliente;
+
+      // 👉 Llamar automáticamente al abrir la página
+  printTicket();
     </script>
 </body>
 </html>
