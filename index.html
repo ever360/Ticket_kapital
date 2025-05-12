@@ -1,70 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ticket de Venta</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket_kapital</title>
   <style>
     .ticket {
       font-family: monospace;
       font-size: 12px;
-      width: 80mm;
+      width: 280px;
       margin: 0 auto;
       border: 1px solid #000;
       padding: 10px;
+      position: relative;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
     }
+
     th, td {
       padding: 4px;
       border: 1px solid #ddd;
       text-align: left;
     }
+
     .ticket-header, .ticket-footer {
       text-align: center;
     }
+
     .ticket-header h2, .ticket-footer p {
       margin: 5px 0;
     }
+
     .divider {
       border-top: 1px dashed #000;
       margin: 10px 0;
     }
+
     .item {
       display: flex;
       justify-content: space-between;
       margin-bottom: 3px;
     }
+
     .item span {
       flex: 1;
     }
+
     .subtotal, .total {
       font-weight: bold;
     }
+
+    .logo {
+      text-align: center;
+      margin-top: 10px;
+    }
+
     .logo img {
-      max-width: 100%;
+      width: 70px;
       height: auto;
+    }
+
+    .btn-compartir {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 25px;
+      cursor: pointer;
+    }
+
+    .btn-compartir img {
+      width: 100%;
+      height: auto;
+    }
+
+    #printButton {
       display: block;
       margin: 10px auto;
-    }
-   .btn-compartir {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        z-index: 1000;
-
-   .btn-compartir img {
-        width: 50px;  /* Ajusta el tamaño del botón si es necesario */
-        height: auto;
-        cursor: pointer;  
     }
   </style>
 </head>
 <body>
-
   <div class="ticket">
+    <div class="btn-compartir" id="btnCompartir">
+      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
+    </div>
+
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
       <h2>PVC</h2>
@@ -85,15 +108,14 @@
     <div class="divider"></div>
 
     <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
-      <div><b>Fecha y Hora:</b> <span id="FechaHora"></span></div>
-      <div><b>No.Ticket:</b> <span id="Ticket"></span></div>
+      <div><b>Fecha y Hora:</b> <span id="Fecha"></span></div>
+      <div><b>No.Ticket:</b> <span id="NoTicket"></span></div>
     </div>
 
     <div class="divider"></div>
-
     <div class="ticket-items">
       <div class="item">
-        <span><b>NIT-Cedula:</b></span> <span id="NtiCedula"></span>
+        <span><b>NIT-Cedula:</b></span> <span id="Identificacion"></span>
       </div>
       <div class="item">
         <span><b>Cliente:</b></span> <span id="NombreCliente"></span>
@@ -133,51 +155,22 @@
       <p style="text-align: right;"><b>Cambio:</b> <span id="Cambio"></span></p>
 
       <h5>Gracias por tu compra.</h5>
-      <p>Por favor, guarda este ticket como comprobante de compra...</p>
+      <p>Por favor, guarda este ticket como comprobante de compra. Para cualquier cambio o devolución, será necesario presentar este ticket junto con los productos en su estado original y dentro del plazo establecido en nuestra política de cambios y devoluciones.</p>
+      <p>Para cualquier consulta o asistencia adicional, no dudes en contactarnos. Agradecemos tu preferencia y esperamos que disfrutes de tu compra.</p>
     </div>
   </div>
 
-  
-
-  <!-- Librería html2canvas -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-   <!-- Botón de compartir en la parte superior izquierda -->
-    <div class="btn-compartir" id="btnCompartir">
-        <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Botón Compartir">
-    </div>
-  
-    <!-- Librería para convertir HTML a imagen -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
-    <script>
-        document.getElementById('btnCompartir').addEventListener('click', function() {
-            const facturaElement = document.querySelector('.invoice-container');
-
-            html2canvas(facturaElement).then(function(canvas) {
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], "factura.png", { type: "image/png" });
-
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({
-                            files: [file],
-                            title: 'Comprobante de Pago',
-                            text: 'Aquí tienes tu comprobante de pago.',
-                        })
-                        .then(() => console.log('Compartido correctamente.'))
-                        .catch((error) => console.log('Error al compartir:', error));
-                    } else {
-                        alert("Tu navegador no soporta la API de compartición.");
-                    }
-                });
-            });
-        });
-    </script>
+  <button id="printButton" onclick="printTicket()">Imprimir Ticket</button>
 
   <script>
-    // Insertar datos de ejemplo
-    document.getElementById("FechaHora").innerText = "2025-05-12 15:30";
-    document.getElementById("Ticket").innerText = "A00123";
-    document.getElementById("NtiCedula").innerText = "123456789";
+    function printTicket() {
+      window.print();
+    }
+
+    // Insertar datos de ejemplo (estáticos)
+    document.getElementById("Fecha").innerText = "2025-05-10 14:32";
+    document.getElementById("NoTicket").innerText = "A-001";
+    document.getElementById("Identificacion").innerText = "123456789";
     document.getElementById("NombreCliente").innerText = "Juan Pérez";
     document.getElementById("FormaPago").innerText = "Efectivo";
 
@@ -204,13 +197,8 @@
     document.getElementById("Total").innerText = "$58,000";
     document.getElementById("Efectivo").innerText = "$60,000";
     document.getElementById("Cambio").innerText = "$2,000";
-
-   
-
-    // Imprimir automáticamente
-    window.onload = function() {
-      window.print();
-    };
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </body>
 </html>
