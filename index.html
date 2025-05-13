@@ -240,7 +240,7 @@
         document.getElementById("Identificacion").textContent = params.get('Identificacion') || "No especificado";
         document.getElementById("cliente").textContent = params.get('cliente') || "Cliente no especificado";
         document.getElementById("FechaHora").textContent = params.get('FechaHora') || "Fecha no especificado";
-        document.getElementById("MetodoPago").textContent = params.get('MetodoPago') || "No especificado";
+        
         
       
         // Obtener los valores de los parámetros
@@ -248,7 +248,7 @@
         var fechaPago = params.has('Identificacion') ? params.get('Identificacion') : "cliente no especificado";
         var fechaPago = params.has('cliente') ? params.get('cliente') : "cliente no especificado";
         var fechaPago = params.has('FechaHora') ? params.get('FechaHora') : "fecha no especificado";
-         var fechaPago = params.has('MetodoPago') ? params.get('MetodoPago') : "No especificado";
+         
         
 
         // Asignar los valores a los elementos HTML
@@ -256,7 +256,7 @@
         document.getElementById("Identificacion").textContent = Identificacion;
         document.getElementById("cliente").textContent = cliente;
         document.getElementById("FechaHora").textContent = FechaHora;
-        document.getElementById("MetodoPago").textContent = MetodoPago;
+       
 
       // 👉 Llamar automáticamente al abrir la página
  
