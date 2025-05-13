@@ -120,8 +120,8 @@
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.4</h2>
-      <h3>Anserma</h3>
+      <h2>PVC 1.5</h2>
+      <h3 id="ciudad">Ciudad no especificada</h3>
     </div>
 
     <div class="logo">
@@ -130,9 +130,9 @@
 
     <div class="ticket-header">
       <h3>Adrian Mauricio Florez</h3>
-      <div>NIT: 14193384600</div>
-      <div>Teléfono: 3104048448</div>
-      <div>Calle 1 # 1-11</div>
+      <div id="Nit"></div>
+      <div id="telefono">0000000000</div>
+      <div id="direccion"></div>
     </div>
 
     <div class="divider"></div>
@@ -238,16 +238,40 @@
    const params = new URLSearchParams(window.location.search);
 
           // Declarar variable con el valor del parámetro
+    const ciudad = params.get('ciudad') || "ciudad no especificada";
+    const Nit = params.get('Nit') || "Nit no especificada";  
+    const telefono = params.get('telefono') || "telefono no especificada";  
+    const direccion = params.get('direccion') || "direccion no especificada"; 
+    const NoTicket = params.get('NoTicket') || "No especificada"; 
     const FechaHora = params.get('FechaHora') || "No especificada";
-   const Identificacion = params.get('Identificacion') || "No especificada";
-   const cliente = params.get('cliente') || "cliente no especificada";  
+    const Identificacion = params.get('Identificacion') || "No especificada";
+    const cliente = params.get('cliente') || "cliente no especificada"; 
+    const FormaPago = params.get('FormaPago') || "No especificada";
+     
+   
+  const cliente = params.get('cliente') || "cliente no especificada";  
+  const cliente = params.get('cliente') || "cliente no especificada";  
+  const cliente = params.get('cliente') || "cliente no especificada";  
+  const cliente = params.get('cliente') || "cliente no especificada";  
+  const cliente = params.get('cliente') || "cliente no especificada";  
+  const cliente = params.get('cliente') || "cliente no especificada";  
+  const cliente = params.get('cliente') || "cliente no especificada";  
+  const cliente = params.get('cliente') || "cliente no especificada";  
+
 
           // Mostrar en el HTML
+     document.getElementById("Nit").textContent = Nit;
+     document.getElementById("telefono").textContent = telefono;
+      document.getElementById("direccion").textContent = direccion;
+     document.getElementById("ciudad").textContent = ciudad;
+     document.getElementById("NoTicket").textContent = NoTicket;
      document.getElementById("FechaHora").textContent = FechaHora;
      document.getElementById("Identificacion").textContent = Identificacion;
      document.getElementById("cliente").textContent = cliente;
-        
+     document.getElementById("FormaPago").textContent = FormaPago;
+      
 
+       
       // 👉 Llamar automáticamente al abrir la página
   printTicket();
     </script>
