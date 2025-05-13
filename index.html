@@ -120,7 +120,7 @@
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.0</h2>
+      <h2>PVC 1.1</h2>
       <h3>Anserma</h3>
     </div>
 
@@ -132,7 +132,7 @@
       <h3>Adrian Mauricio Florez</h3>
       <div>NIT: 14193384600</div>
       <div>Teléfono: 3104048448</div>
-      <div>Anserma Caldas</div>
+      <div>Calle 1 # 1-11</div>
     </div>
 
     <div class="divider"></div>
@@ -196,11 +196,12 @@
     function printTicket() {
       window.print();
     }
-
+ // Obtener los parámetros de la URL
+        const params = new URLSearchParams(window.location.search);
 // Insertar datos de ejemplo (estáticos)
     document.getElementById("Fecha").innerText = "2025-05-10 14:32";
+    document.getElementById("cliente").innerText = "cliente";
     document.getElementById("NoTicket").innerText = "A-001";
-    
     document.getElementById("Identificacion").innerText = "123456789";
     document.getElementById("NombreCliente").innerText = "Juan Pérez";
     document.getElementById("FormaPago").innerText = "Efectivo"; 
@@ -239,19 +240,19 @@
 
         // Asignar valores a los campos
         document.getElementById("NoTicket").textContent = params.get('NoTicket') || "NoTicket no especificado";
-        document.getElementById("cliente").textContent = params.get('cliente') || "Cliente no especificado";
+        
         
         
          
         
         // Obtener los valores de los parámetros
         var boleto = params.has('NoTicket') ? params.get('NoTicket') : "NoTicket no especificado";
-        var fechaPago = params.has('cliente') ? params.get('cliente') : "cliente no especificado";
+        
         
 
         // Asignar los valores a los elementos HTML
         document.getElementById("NoTicket").textContent = NoTicket;
-        document.getElementById("cliente").textContent = cliente;
+        
 
       // 👉 Llamar automáticamente al abrir la página
   printTicket();
