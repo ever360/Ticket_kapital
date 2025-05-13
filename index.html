@@ -120,7 +120,7 @@
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.3</h2>
+      <h2>PVC 1.4</h2>
       <h3>Anserma</h3>
     </div>
 
@@ -240,6 +240,7 @@
         // Asignar valores a los campos
         document.getElementById("NoTicket").textContent = params.get('NoTicket') || "NoTicket no especificado";
         document.getElementById("cliente").textContent = params.get('cliente') || "Cliente no especificado";
+        document.getElementById("fecha").textContent = params.get('fecha') || "Cliente no especificado";
         
         
          
@@ -247,11 +248,13 @@
         // Obtener los valores de los parámetros
         var boleto = params.has('NoTicket') ? params.get('NoTicket') : "NoTicket no especificado";
         var fechaPago = params.has('cliente') ? params.get('cliente') : "cliente no especificado";
+        var fechaPago = params.has('fecha') ? params.get('fecha') : "fecha no especificado";
         
 
         // Asignar los valores a los elementos HTML
         document.getElementById("NoTicket").textContent = NoTicket;
         document.getElementById("cliente").textContent = cliente;
+        document.getElementById("fecha").textContent = fecha;
 
       // 👉 Llamar automáticamente al abrir la página
   printTicket();
