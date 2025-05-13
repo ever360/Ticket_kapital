@@ -120,7 +120,7 @@
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.7</h2>
+      <h2>PVC 1.0</h2>
       <h3>Anserma</h3>
     </div>
 
@@ -132,13 +132,13 @@
       <h3>Adrian Mauricio Florez</h3>
       <div>NIT: 14193384600</div>
       <div>Teléfono: 3104048448</div>
-      <div>calle 1 #1-11</div>
+      <div>Calle 1 # 1-11</div>
     </div>
 
     <div class="divider"></div>
 
     <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
-      <div><b>Fecha y Hora:</b> <span id="FechaHora"></span></div>
+      <div><b>Fecha y Hora:</b> <span id="Fecha"></span></div>
       <div><b>No.Ticket:</b> <span id="NoTicket"></span></div>
     </div>
 
@@ -151,7 +151,7 @@
         <span><b>Cliente:</b></span> <span id="cliente"></span>
       </div>
       <div class="item">
-        <span><b>Método de pago:</b></span> <span id="MetodoPago"></span>
+        <span><b>Método de pago:</b></span> <span id="FormaPago"></span>
       </div>
     </div>
 
@@ -198,11 +198,13 @@
     }
 
 // Insertar datos de ejemplo (estáticos)
+    document.getElementById("Fecha").innerText = "2025-05-10 14:32";
+    document.getElementById("NoTicket").innerText = "A-001";
     
-    
-    
-    
-   
+    document.getElementById("Identificacion").innerText = "123456789";
+    document.getElementById("NombreCliente").innerText = "Juan Pérez";
+    document.getElementById("FormaPago").innerText = "Efectivo"; 
+
     document.getElementById("DetalleVenta").innerHTML = `
       <tr>
         <td>Panel PVC</td>
@@ -237,32 +239,22 @@
 
         // Asignar valores a los campos
         document.getElementById("NoTicket").textContent = params.get('NoTicket') || "NoTicket no especificado";
-        document.getElementById("Identificacion").textContent = params.get('Identificacion') || "No especificado";
         document.getElementById("cliente").textContent = params.get('cliente') || "Cliente no especificado";
-        document.getElementById("FechaHora").textContent = params.get('FechaHora') || "Fecha no especificado";
         
         
-      
+         
+        
         // Obtener los valores de los parámetros
         var boleto = params.has('NoTicket') ? params.get('NoTicket') : "NoTicket no especificado";
-        var fechaPago = params.has('Identificacion') ? params.get('Identificacion') : "cliente no especificado";
         var fechaPago = params.has('cliente') ? params.get('cliente') : "cliente no especificado";
-        var fechaPago = params.has('FechaHora') ? params.get('FechaHora') : "fecha no especificado";
-         
         
 
         // Asignar los valores a los elementos HTML
         document.getElementById("NoTicket").textContent = NoTicket;
-        document.getElementById("Identificacion").textContent = Identificacion;
         document.getElementById("cliente").textContent = cliente;
-        document.getElementById("FechaHora").textContent = FechaHora;
-       
 
       // 👉 Llamar automáticamente al abrir la página
- 
-      function printTicket() {
-      window.print();
-    }
+  printTicket();
     </script>
 </body>
 </html>
