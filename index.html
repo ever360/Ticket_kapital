@@ -196,7 +196,25 @@
     function printTicket() {
       window.print();
     }
+// Obtener los parámetros de la URL
+        const params = new URLSearchParams(window.location.search);
 
+        // Asignar valores a los campos
+        document.getElementById("NoTicket").textContent = params.get('NoTicket') || "NoTicket no especificado";
+        document.getElementById("cliente").textContent = params.get('cliente') || "Cliente no especificado";
+        
+        
+         
+        
+        // Obtener los valores de los parámetros
+        var boleto = params.has('NoTicket') ? params.get('NoTicket') : "NoTicket no especificado";
+        var fechaPago = params.has('cliente') ? params.get('cliente') : "cliente no especificado";
+        
+
+        // Asignar los valores a los elementos HTML
+        document.getElementById("NoTicket").textContent = NoTicket;
+        document.getElementById("cliente").textContent = cliente;
+    
 // Insertar datos de ejemplo (estáticos)
     document.getElementById("Fecha").innerText = "2025-05-10 14:32";
     document.getElementById("NoTicket").innerText = "A-001";
