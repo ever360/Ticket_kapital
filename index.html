@@ -88,36 +88,7 @@
   </style>
 </head>
 <body>
-  <div class="ticket">
-    <div class="btn-compartir" id="btnCompartir">
-      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
-    </div>
- <!-- Librería para convertir HTML a imagen -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-    <script>
-        document.getElementById('btnCompartir').addEventListener('click', function() {
-            const facturaElement = document.querySelector('.ticket');
-
-            html2canvas(facturaElement).then(function(canvas) {
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], "factura.png", { type: "image/png" });
-
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({
-                            files: [file],
-                            title: 'Comprobante de Pago',
-                            text: 'Aquí tienes tu comprobante de pago.',
-                        })
-                        .then(() => console.log('Compartido correctamente.'))
-                        .catch((error) => console.log('Error al compartir:', error));
-                    } else {
-                        alert("Tu navegador no soporta la API de compartición.");
-                    }
-                });
-            });
-        });
-    </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
       <h2>PVC 1.1</h2>
@@ -138,7 +109,7 @@
     <div class="divider"></div>
 
     <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
-      <div><b>Fecha y Hora:</b> <span id="Fecha"></span></div>
+      <div><b>Fecha y Hora:</b> <span id="FechaHora"></span></div>
       <div><b>No.Ticket:</b> <span id="NoTicket"></span></div>
     </div>
 
@@ -190,7 +161,36 @@
     </div>
   </div>
 
-  
+    <div class="ticket">
+    <div class="btn-compartir" id="btnCompartir">
+      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
+    </div>
+ <!-- Librería para convertir HTML a imagen -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <script>
+        document.getElementById('btnCompartir').addEventListener('click', function() {
+            const facturaElement = document.querySelector('.ticket');
+
+            html2canvas(facturaElement).then(function(canvas) {
+                canvas.toBlob(function(blob) {
+                    const file = new File([blob], "factura.png", { type: "image/png" });
+
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            files: [file],
+                            title: 'Comprobante de Pago',
+                            text: 'Aquí tienes tu comprobante de pago.',
+                        })
+                        .then(() => console.log('Compartido correctamente.'))
+                        .catch((error) => console.log('Error al compartir:', error));
+                    } else {
+                        alert("Tu navegador no soporta la API de compartición.");
+                    }
+                });
+            });
+        });
+    </script>
 
   <script>
     function printTicket() {
@@ -198,7 +198,7 @@
     }
 
 // Insertar datos de ejemplo (estáticos)
-    document.getElementById("Fecha").innerText = "2025-05-10 14:32";
+    document.getElementById("FechaHora").innerText = "FechaHora";
     document.getElementById("NoTicket").innerText = "A-001";
     
     document.getElementById("Identificacion").innerText = "123456789";
