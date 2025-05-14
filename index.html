@@ -122,7 +122,7 @@ th, td {
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 2.2</h2>
+      <h2>PVC 2.3</h2>
       <h3 id="ciudad">Ciudad no especificada</h3>
     </div>
 
@@ -241,14 +241,14 @@ th, td {
      document.getElementById("cliente").textContent = cliente;
      document.getElementById("FormaPago").textContent = FormaPago;
     
-     document.getElementById("TotalArticulos").innerHTML = TotalArticulos;
+     document.getElementById("TotalArticulos").textContent = TotalArticulos;
      document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
-     document.getElementById("SubTotal").innerHTML = SubTotal;
-     document.getElementById("Flete").innerHTML = Flete;
-     document.getElementById("Descuento").innerHTML = Descuento;
-     document.getElementById("Total").innerHTML = Total;
-     document.getElementById("Efectivo").innerHTML = Efectivo;
-     document.getElementById("Cambio").innerHTML = Cambio;
+     document.getElementById("SubTotal").textContent = SubTotal;
+     document.getElementById("Flete").textContent = Flete;
+     document.getElementById("Descuento").textContent = Descuento;
+     document.getElementById("Total").textContent = Total;
+     document.getElementById("Efectivo").textContent = Efectivo;
+     document.getElementById("Cambio").textContent = Cambio;
 
     // Condición para ocultar Efectivo y Cambio si la forma de pago es transferencia
 if (FormaPago.toLowerCase() === "transferencia") {
