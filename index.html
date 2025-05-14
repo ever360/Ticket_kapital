@@ -5,102 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ticket_kapital</title>
   <style>
-    .ticket {
-      font-family: monospace;
-      font-size: 12px;
-      width: 280px;
-      margin: 0 auto;
-      border: 1px solid #000;
-      padding: 10px;
-      position: relative;
-    }
+  .ticket {
+  font-family: monospace;
+  font-size: 12px;
+  width: 280px;
+  margin: 0 auto;
+  border: 1px solid #000;
+  padding: 10px;
+  position: relative;
+  overflow: hidden; /* Previene el desbordamiento */
+}
 
-    .ticket-header, .ticket-footer {
-      text-align: center;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-    .ticket-header h2, .ticket-footer p {
-      margin: 5px 0;
-    }
+th, td {
+  padding: 4px;
+  border: 1px solid #ddd;
+  text-align: left;
+  word-wrap: break-word; /* Esto hará que las palabras largas se ajusten */
+  overflow-wrap: break-word; /* Asegura que los textos largos no desborden */
+  max-width: 100%; /* Limita el tamaño de las celdas */
+}
 
-    .divider {
-      border-top: 1px dashed #000;
-      margin: 10px 0;
-    }
+.ticket-header, .ticket-footer {
+  text-align: center;
+}
 
-    .item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 3px;
-    }
+.ticket-header h2, .ticket-footer p {
+  margin: 5px 0;
+}
 
-    .item span {
-      flex: 1;
-    }
+.divider {
+  border-top: 1px dashed #000;
+  margin: 10px 0;
+}
 
-    .subtotal, .total {
-      font-weight: bold;
-    }
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
 
-    .logo {
-      text-align: center;
-      margin-top: 10px;
-    }
+.item span {
+  flex: 1;
+}
 
-    .logo img {
-      width: 70px;
-      height: auto;
-    }
+.subtotal, .total {
+  font-weight: bold;
+}
 
-    .btn-compartir {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      width: 25px;
-      cursor: pointer;
-    }
+.logo {
+  text-align: center;
+  margin-top: 10px;
+}
 
-    .btn-compartir img {
-      width: 100%;
-      height: auto;
-    }
+.logo img {
+  width: 70px;
+  height: auto;
+}
 
-    #printButton {
-      display: block;
-      margin: 10px auto;
-    }
+.btn-compartir {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 25px;
+  cursor: pointer;
+}
 
-    /* Estilo para los detalles de la venta */
-    .detalle-venta {
-      margin-top: 10px;
-    }
+.btn-compartir img {
+  width: 100%;
+  height: auto;
+}
 
-    .detalle-venta .producto {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
+#detalleVenta {
+  width: 100%;
+  word-wrap: break-word; /* Evita el desbordamiento de palabras largas */
+}
 
-    .detalle-venta .linea {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-    }
-
-    @media print {
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: monospace;
-      }
-      .ticket {
-        width: 100mm;
-        margin: 0;
-        padding: 5mm;
-      }
-      .btn-compartir {
-        display: none;
-      }
-    }
+  
   </style>
 </head>
 <body>
@@ -108,10 +93,35 @@
     <div class="btn-compartir" id="btnCompartir">
       <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
     </div>
+ <!-- Librería para convertir HTML a imagen -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
+    <script>
+        document.getElementById('btnCompartir').addEventListener('click', function() {
+            const facturaElement = document.querySelector('.ticket');
+
+            html2canvas(facturaElement).then(function(canvas) {
+                canvas.toBlob(function(blob) {
+                    const file = new File([blob], "factura.png", { type: "image/png" });
+
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            files: [file],
+                            title: 'Comprobante de Pago',
+                            text: 'Aquí tienes tu comprobante de pago.',
+                        })
+                        .then(() => console.log('Compartido correctamente.'))
+                        .catch((error) => console.log('Error al compartir:', error));
+                    } else {
+                        alert("Tu navegador no soporta la API de compartición.");
+                    }
+                });
+            });
+        });
+    </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.96</h2>
+      <h2>PVC 2.0</h2>
       <h3 id="ciudad">Ciudad no especificada</h3>
     </div>
 
@@ -122,7 +132,7 @@
     <div class="ticket-header">
       <h3 id= "representante">No especificado</h3>
       <div><b>Nit:</b></div>
-      <div id="Nit"></div>
+        <div  id="Nit"></div>
       <div><b>Telefono</b></div>
       <div id="telefono"></div>
       <div><b>Dirección</b></div> 
@@ -137,20 +147,38 @@
     </div>
 
     <div class="divider"></div>
-<table>
+    <div class="ticket-items">
+      <div class="item">
+        <span><b>NIT-Cedula:</b></span> <span id="Identificacion"></span>
+      </div>
+      <div class="item">
+        <span><b>Cliente:</b></span> <span id="cliente"></span>
+      </div>
+      <div class="item">
+        <span><b>Método de pago:</b></span> <span id="FormaPago"></span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <table>
       <thead>
         <tr>
+        
+          <th style="text-align: left;">Cant.</th>
           <th>Prod</th>
-          <th style="text-align: right;">Cnt</th>
-          <th style="text-align: right;">Valor</th>
-          <th style="text-align: right;">Desc</th>
+          <th style="text-align: right;">Valor Unt.</th>
+          <th style="text-align: right;">Segun</th>
           <th style="text-align: right;">Total</th>
         </tr>
       </thead>
       <tbody id="DetalleVenta"></tbody>
     </table>
-    <!-- Aquí se insertarán los detalles de la venta -->
-    <div class="detalle-venta" id="detalleVenta"></div>
+
+    <div class="item">
+      <span><b>Total Artículos:</b></span>
+      <span id="NArticulos"></span>
+    </div>
 
     <div class="divider"></div>
 
@@ -167,8 +195,17 @@
     </div>
   </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
+  
+
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+   <script>
+           // Obtener los parámetros de la URL
+   const params = new URLSearchParams(window.location.search);
+
+          // Declarar variable con el valor del parámetro
+    
     const representante = params.get('representante') || "No especificado";
     const ciudad = params.get('ciudad') || "No especificada";
     const Nit = params.get('Nit') || "No especificado";  
@@ -180,24 +217,30 @@
     const cliente = params.get('cliente') || "No especificado"; 
     const FormaPago = params.get('FormaPago') || "No especificado";
     const DetalleVenta = params.get('DetalleVenta') || "";
+     
+   
+  
 
-    document.getElementById("representante").textContent = representante;
-    document.getElementById("Nit").textContent = Nit;
-    document.getElementById("telefono").textContent = telefono;
-    document.getElementById("direccion").textContent = direccion;
-    document.getElementById("ciudad").textContent = ciudad;
-    document.getElementById("NoTicket").textContent = NoTicket;
-    document.getElementById("FechaHora").textContent = FechaHora;
-    document.getElementById("Identificacion").textContent = Identificacion;
-    document.getElementById("cliente").textContent = cliente;
-    document.getElementById("FormaPago").textContent = FormaPago;
+          // Mostrar en el HTML
+     document.getElementById("representante").textContent = representante;
+     document.getElementById("Nit").textContent = Nit;
+     document.getElementById("telefono").textContent = telefono;
+     document.getElementById("direccion").textContent = direccion;
+     document.getElementById("ciudad").textContent = ciudad;
+     document.getElementById("NoTicket").textContent = NoTicket;
+     document.getElementById("FechaHora").textContent = FechaHora;
+     document.getElementById("Identificacion").textContent = Identificacion;
+     document.getElementById("cliente").textContent = cliente;
+     document.getElementById("FormaPago").textContent = FormaPago;
+     document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
 
-    // Insertar el HTML de DetalleVenta en la página
-    if (DetalleVenta) {
-      // Aquí agregamos el contenido HTML directamente en el contenedor correspondiente
-      document.getElementById("detalleVenta").innerHTML = decodeURIComponent(DetalleVenta);
-    }
-  </script>
+      
+
+       
+      // 👉 Llamar automáticamente al abrir la página
+  window.onload = () => {
+  window.print();
+};
+    </script>
 </body>
 </html>
-
