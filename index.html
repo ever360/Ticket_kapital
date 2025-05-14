@@ -216,7 +216,7 @@ th, td {
     const Identificacion = params.get('Identificacion') || "No especificada";
     const cliente = params.get('cliente') || "No especificado"; 
     const FormaPago = params.get('FormaPago') || "No especificado";
-    const  TotalArticulos = params.get(' TotalArticulos') || "0";
+    const TotalArticulos = params.get('TotalArticulos') || "0";
     const DetalleVenta = params.get('DetalleVenta') || "No hay ventas";
      
      const SubTotal = params.get('SubTotal') || "$0.00";
@@ -241,7 +241,7 @@ th, td {
      document.getElementById("cliente").textContent = cliente;
      document.getElementById("FormaPago").textContent = FormaPago;
     
-     document.getElementById(" TotalArticulos").innerHTML =  TotalArticulos;
+     document.getElementById("TotalArticulos").innerHTML = TotalArticulos;
      document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
      document.getElementById("SubTotal").innerHTML = SubTotal;
      document.getElementById("Flete").innerHTML = Flete;
