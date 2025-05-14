@@ -120,7 +120,7 @@
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 1.92</h2>
+      <h2>PVC 1.93</h2>
       <h3 id="ciudad">Ciudad no especificada</h3>
     </div>
 
@@ -164,7 +164,7 @@
       <thead>
         <tr>
         
-          <th style="text-align: right;">Cant.</th>
+          <th style="text-align: left;">Cant.</th>
           <th>Prod</th>
           <th style="text-align: right;">Valor Unt.</th>
           <th style="text-align: right;">Segun</th>
@@ -260,7 +260,8 @@
      document.getElementById("Identificacion").textContent = Identificacion;
      document.getElementById("cliente").textContent = cliente;
      document.getElementById("FormaPago").textContent = FormaPago;
-     document.getElementById("DetalleVenta").textContent = DetalleVenta;
+     document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
+
       
 
        
