@@ -1,266 +1,169 @@
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ticket_kapital</title>
+  <title>Cotización - Cielo Rasos</title>
   <style>
-.ticket {
-      font-family: monospace;
-      font-size: 12px;
-      width: 280px;
-      margin: 0 auto;
-      border: 1px solid #000;
-      padding: 10px;
-      position: relative;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      color: #333;
     }
-
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #007BFF;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .svg-logo {
+      width: 150px;
+      height: auto;
+    }
+    .company-info {
+      text-align: right;
+    }
+    h1 {
+      text-align: center;
+      color: #007BFF;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 20px;
     }
-
     th, td {
-      padding: 4px;
       border: 1px solid #ddd;
+      padding: 10px;
       text-align: left;
     }
-
-    .ticket-header, .ticket-footer {
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+    .totals {
+      text-align: right;
+      margin-top: 20px;
+    }
+    .observaciones {
+      margin-top: 30px;
+    }
+    .footer {
       text-align: center;
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: gray;
     }
-
-    .ticket-header h2, .ticket-footer p {
-      margin: 5px 0;
-    }
-
-    .divider {
-      border-top: 1px dashed #000;
-      margin: 10px 0;
-    }
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 3px;
-    }
-
-    .item span {
-      flex: 1;
-    }
-
-    .subtotal, .total {
-      font-weight: bold;
-    }
-
-    .logo {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .logo img {
-      width: 70px;
-      height: auto;
-    }
-
     .btn-compartir {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      width: 25px;
+      margin: 20px auto;
+      padding: 12px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
-    }
-
-    .btn-compartir img {
-      width: 100%;
-      height: auto;
-    }
-
-     
-    
-    #printButton {
+      text-align: center;
       display: block;
-      margin: 10px auto;
     }
-
   </style>
 </head>
 <body>
-  <div class="ticket">
-    <div class="btn-compartir" id="btnCompartir">
-      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
-    </div>
- <!-- Librería para convertir HTML a imagen -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-    <script>
-        document.getElementById('btnCompartir').addEventListener('click', function() {
-            const facturaElement = document.querySelector('.ticket');
-
-            html2canvas(facturaElement).then(function(canvas) {
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], "factura.png", { type: "image/png" });
-
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({
-                            files: [file],
-                            title: 'Comprobante de Pago',
-                            text: 'Aquí tienes tu comprobante de pago.',
-                        })
-                        .then(() => console.log('Compartido correctamente.'))
-                        .catch((error) => console.log('Error al compartir:', error));
-                    } else {
-                        alert("Tu navegador no soporta la API de compartición.");
-                    }
-                });
-            });
-        });
-    </script>
-    <div class="ticket-header">
-      <h2>Cielo Razos</h2>
-      <h2>PVC 2.4</h2>
-      <h3 id="ciudad">Ciudad no especificada</h3>
+  <div class="header">
+    <!-- Logo SVG -->
+    <div class="svg-logo">
+      <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="60,140 60,30 90,30 90,150" fill="blue" />
+        <polygon points="50,40 50,30 190,-20 89,50" fill="red" />
+        <line x1="150" y2="5" x2="250" y3="200" style="stroke:red;stroke-width:8" />
+        <text x="140" y="60" fill="blue" font-size="45">PVC</text>
+        <text x="110" y="110" fill="red" font-size="33">CIELO RAZOS</text>
+      </svg>
     </div>
 
-    <div class="logo">
-      <img src="https://www.appsheet.com/Content/img/appicons/other.png" alt="Logo">
-    </div>
-
-    <div class="ticket-header">
-      <h3 id= "representante">No especificado</h3>
-      <div><b>Nit:</b></div>
-        <div  id="Nit"></div>
-      <div><b>Telefono</b></div>
-      <div id="telefono"></div>
-      <div><b>Dirección</b></div> 
-      <div id="direccion"></div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
-      <div><b>Fecha y Hora:</b> <span id="FechaHora"></span></div>
-      <div><b>No.Ticket:</b> <span id="NoTicket"></span></div>
-    </div>
-
-    <div class="divider"></div>
-    <div class="ticket-items">
-      <div class="item">
-        <span><b>NIT-Cedula:</b></span> <span id="Identificacion"></span>
-      </div>
-      <div class="item">
-        <span><b>Cliente:</b></span> <span id="cliente"></span>
-      </div>
-      <div class="item">
-        <span><b>Método de pago:</b></span> <span id="FormaPago"></span>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <table>
-      <thead>
-        <tr>
-        
-          <th style="text-align: left;">Cnt.</th>
-          <th>Art.</th>
-          <th style="text-align: right;">V Unt.</th>
-          <th style="text-align: right;">Total</th>
-        </tr>
-      </thead>
-      <tbody id="DetalleVenta"></tbody>
-    </table>
-<br>
-    <div class="item">
-       <span><b>Total Artículos:</b></span><span id="TotalArticulos"></span>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="ticket-footer">
-      <p style="text-align: right;"><b>SubTotal:</b> <span id="SubTotal"></span></p>
-      <p style="text-align: right;"><b>Flete:</b> <span id="Flete"></span></p>
-      <p style="text-align: right;"><b>Descuento:</b> <span id="Descuento"></span></p>
-      <p style="text-align: right;"><b>Total:</b> <span id="Total"></span></p>
-      <p style="text-align: right;"><b>Efectivo:</b> <span id="Efectivo"></span></p>
-      <p style="text-align: right;"><b>Cambio:</b> <span id="Cambio"></span></p>
-
-      <h5>Gracias por tu compra.</h5>
-      <p>Por favor, guarda este ticket como comprobante de compra. Para cualquier cambio o devolución, será necesario presentar este ticket junto con los productos en su estado original y dentro del plazo establecido en nuestra política de cambios y devoluciones.</p>
-      <p>Para cualquier consulta o asistencia adicional, no dudes en contactarnos. Agradecemos tu preferencia y esperamos que disfrutes de tu compra.</p>
+    <div class="company-info">
+      <strong>CIELOR PVC</strong><br>
+      Calle 123, Ciudad<br>
+      Tel: 123-456-7890<br>
+      contacto@cielorpvc.com
     </div>
   </div>
 
-  
+  <h1>COTIZACIÓN</h1>
 
-  
+  <p><strong>Cliente:</strong> Juan Pérez<br>
+     <strong>Fecha:</strong> 14/05/2025<br>
+     <strong>Dirección:</strong> Av. Principal #456, Ciudad</p>
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-   <script>
-           // Obtener los parámetros de la URL
-   const params = new URLSearchParams(window.location.search);
+  <table>
+    <tr>
+      <th>Producto</th>
+      <th>Descripción</th>
+      <th>Cantidad</th>
+      <th>Precio Unitario</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <td>Cielo raso PVC blanco</td>
+      <td>3.80m x 25cm</td>
+      <td>40</td>
+      <td>$10.00</td>
+      <td>$400.00</td>
+    </tr>
+    <tr>
+      <td>Perfil esquinal</td>
+      <td>2.40m blanco</td>
+      <td>20</td>
+      <td>$2.50</td>
+      <td>$50.00</td>
+    </tr>
+    <tr>
+      <td>Tornillos</td>
+      <td>Paquete x100</td>
+      <td>1</td>
+      <td>$5.00</td>
+      <td>$5.00</td>
+    </tr>
+  </table>
 
-          // Declarar variable con el valor del parámetro
-    
-    const representante = params.get('representante') || "No especificado";
-    const ciudad = params.get('ciudad') || "No especificada";
-    const Nit = params.get('Nit') || "No especificado";  
-    const telefono = params.get('telefono') || "No especificado";  
-    const direccion = params.get('direccion') || "No especificada"; 
-    const NoTicket = params.get('NoTicket') || "No especificado"; 
-    const FechaHora = params.get('FechaHora') || "No especificada";
-    const Identificacion = params.get('Identificacion') || "No especificada";
-    const cliente = params.get('cliente') || "No especificado"; 
-    const FormaPago = params.get('FormaPago') || "No especificado";
-    const TotalArticulos = params.get('TotalArticulos') || "0";
-    const DetalleVenta = params.get('DetalleVenta') || "No hay ventas";
-     
-     const SubTotal = params.get('SubTotal') || "$0.00";
-     const Flete = params.get('Flete') || " $0.00";
-     const Descuento = params.get('Descuento') || "$0.00";
-     const Total = params.get('Total') || "$0.00";
-     const Efectivo = params.get('Efectivo') || "$0.00";
-     const Cambio = params.get('Cambio') || "$0.00";
-     
-   
-  
+  <div class="totals">
+    <p><strong>Subtotal:</strong> $455.00</p>
+    <p><strong>IVA (12%):</strong> $54.60</p>
+    <p><strong>Total:</strong> <strong>$509.60</strong></p>
+  </div>
 
-          // Mostrar en el HTML
-     document.getElementById("representante").textContent = representante;
-     document.getElementById("Nit").textContent = Nit;
-     document.getElementById("telefono").textContent = telefono;
-     document.getElementById("direccion").textContent = direccion;
-     document.getElementById("ciudad").textContent = ciudad;
-     document.getElementById("NoTicket").textContent = NoTicket;
-     document.getElementById("FechaHora").textContent = FechaHora;
-     document.getElementById("Identificacion").textContent = Identificacion;
-     document.getElementById("cliente").textContent = cliente;
-     document.getElementById("FormaPago").textContent = FormaPago;
-    
-     document.getElementById("TotalArticulos").textContent = TotalArticulos;
-     document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
-     document.getElementById("SubTotal").textContent = SubTotal;
-     document.getElementById("Flete").textContent = Flete;
-     document.getElementById("Descuento").textContent = Descuento;
-     document.getElementById("Total").textContent = Total;
-     document.getElementById("Efectivo").textContent = Efectivo;
-     document.getElementById("Cambio").textContent = Cambio;
+  <div class="observaciones">
+    <p><strong>Observaciones:</strong></p>
+    <p>Esta cotización tiene una validez de 5 días. Los precios pueden variar según disponibilidad. No incluye instalación.</p>
+  </div>
 
-    // Condición para ocultar Efectivo y Cambio si la forma de pago es transferencia
-if (FormaPago.toLowerCase() === "transferencia") {
-  document.getElementById("Efectivo").style.display = "none";
-  document.getElementById("Cambio").style.display = "none";
-} else {
-  document.getElementById("Efectivo").innerHTML = Efectivo;
-  document.getElementById("Cambio").innerHTML = Cambio;
-}  
+  <button class="btn-compartir" onclick="compartir()">Compartir cotización</button>
 
-       
-      // 👉 Llamar automáticamente al abrir la página
-  window.onload = () => {
-  window.print();
-};
-    </script>
-  
+  <div class="footer">
+    Gracias por confiar en nosotros. <br>
+    CIELOR PVC – Calidad que resalta tu techo.
+  </div>
+
+  <script>
+    function compartir() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Cotización - CIELOR PVC',
+          text: 'Consulta esta cotización de cielo rasos.',
+          url: window.location.href
+        })
+        .then(() => console.log('Compartido correctamente'))
+        .catch((error) => console.error('Error al compartir:', error));
+      } else {
+        alert('La opción de compartir no está disponible en este dispositivo.');
+      }
+    }
+  </script>
+
 </body>
 </html>
