@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ticket_kapital</title>
   <style>
-  .ticket {
+.ticket {
   font-family: monospace;
   font-size: 12px;
   width: 280px;
@@ -13,21 +13,22 @@
   border: 1px solid #000;
   padding: 10px;
   position: relative;
-  overflow: hidden; /* Previene el desbordamiento */
+  overflow: hidden; /* Para evitar que el contenido se desborde */
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed; /* Para evitar que las celdas se expandan demasiado */
 }
 
 th, td {
   padding: 4px;
   border: 1px solid #ddd;
   text-align: left;
-  word-wrap: break-word; /* Esto hará que las palabras largas se ajusten */
-  overflow-wrap: break-word; /* Asegura que los textos largos no desborden */
-  max-width: 100%; /* Limita el tamaño de las celdas */
+  word-wrap: break-word; /* Para ajustar el texto largo */
+  overflow: hidden; /* Prevenir el desbordamiento */
+  white-space: nowrap; /* Evitar que las celdas se expandan horizontalmente */
 }
 
 .ticket-header, .ticket-footer {
@@ -80,10 +81,10 @@ th, td {
   height: auto;
 }
 
-#detalleVenta {
-  width: 100%;
-  word-wrap: break-word; /* Evita el desbordamiento de palabras largas */
+#DetalleVenta tr td {
+  padding: 3px; /* Ajusta el tamaño del padding para que se ajuste mejor */
 }
+
 
   
   </style>
@@ -121,7 +122,7 @@ th, td {
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 2.0</h2>
+      <h2>PVC 2.1</h2>
       <h3 id="ciudad">Ciudad no especificada</h3>
     </div>
 
@@ -165,9 +166,9 @@ th, td {
       <thead>
         <tr>
         
-          <th style="text-align: left;">Cant.</th>
-          <th>Prod</th>
-          <th style="text-align: right;">Valor Unt.</th>
+          <th style="text-align: left;">Cnt.</th>
+          <th>Art.</th>
+          <th style="text-align: right;">V Unt.</th>
           <th style="text-align: right;">Segun</th>
           <th style="text-align: right;">Total</th>
         </tr>
