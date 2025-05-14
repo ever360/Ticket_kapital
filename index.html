@@ -169,7 +169,6 @@ th, td {
           <th style="text-align: left;">Cnt.</th>
           <th>Art.</th>
           <th style="text-align: right;">V Unt.</th>
-          <th style="text-align: right;">Segun</th>
           <th style="text-align: right;">Total</th>
         </tr>
       </thead>
@@ -177,6 +176,7 @@ th, td {
     </table>
 
     <div class="item">
+      <br>
       <span><b>Total Artículos:</b></span>
       <span id="NArticulos"></span>
     </div>
@@ -185,6 +185,7 @@ th, td {
 
     <div class="ticket-footer">
       <p style="text-align: right;"><b>SubTotal:</b> <span id="SubTotal"></span></p>
+      <p style="text-align: right;"><b>Flete:</b> <span id="Flete"></span></p>
       <p style="text-align: right;"><b>Descuento:</b> <span id="Descuento"></span></p>
       <p style="text-align: right;"><b>Total:</b> <span id="Total"></span></p>
       <p style="text-align: right;"><b>Efectivo:</b> <span id="Efectivo"></span></p>
@@ -217,7 +218,14 @@ th, td {
     const Identificacion = params.get('Identificacion') || "No especificada";
     const cliente = params.get('cliente') || "No especificado"; 
     const FormaPago = params.get('FormaPago') || "No especificado";
-    const DetalleVenta = params.get('DetalleVenta') || "";
+    const DetalleVenta = params.get('DetalleVenta') || "No hay ventas";
+     
+     const SubTotal = params.get('SubTotal') || "$0.00";
+     const Flete = params.get('Flete') || " $0.00";
+     const Descuento = params.get('Descuento') || "$0.00";
+     const Total = params.get('Total') || "$0.00";
+     const Efectivo = params.get('Efectivo') || "$0.00";
+     const Cambio = params.get('Cambio') || "$0.00";
      
    
   
@@ -235,7 +243,21 @@ th, td {
      document.getElementById("FormaPago").textContent = FormaPago;
      document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
 
-      
+     document.getElementById("SubTotal").innerHTML = SubTotal;
+     document.getElementById("Flete").innerHTML = Flete;
+     document.getElementById("Descuento").innerHTML = Descuento;
+     document.getElementById("Total").innerHTML = Total;
+     document.getElementById("Efectivo").innerHTML = Efectivo;
+     document.getElementById("Cambio").innerHTML = Cambio;
+
+    // Condición para ocultar Efectivo y Cambio si la forma de pago es transferencia
+if (FormaPago.toLowerCase() === "transferencia") {
+  document.getElementById("Efectivo").style.display = "none";
+  document.getElementById("Cambio").style.display = "none";
+} else {
+  document.getElementById("Efectivo").innerHTML = Efectivo;
+  document.getElementById("Cambio").innerHTML = Cambio;
+}  
 
        
       // 👉 Llamar automáticamente al abrir la página
