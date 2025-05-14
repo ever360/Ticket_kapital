@@ -130,8 +130,9 @@
 
     <div class="ticket-header">
       <h3>Adrian Mauricio Florez</h3>
-      <div><b>Nit:</b><span  id="Nit"></span>span></div>
-      <div id="telefono">0000000000</div>
+      <div><b>Nit:</b><span  id="Nit"></span></div>
+      <div>Telefono</div>
+      <div id="telefono"></div>
       <div id="direccion"></div>
     </div>
 
@@ -231,14 +232,14 @@
    const params = new URLSearchParams(window.location.search);
 
           // Declarar variable con el valor del parámetro
-    const ciudad = params.get('ciudad') || "ciudad no especificada";
-    const Nit = params.get('Nit') || "Nit no especificada";  
-    const telefono = params.get('telefono') || "telefono no especificada";  
-    const direccion = params.get('direccion') || "direccion no especificada"; 
+    const ciudad = params.get('ciudad') || "No especificada";
+    const Nit = params.get('Nit') || "No especificada";  
+    const telefono = params.get('telefono') || "No especificada";  
+    const direccion = params.get('direccion') || "No especificada"; 
     const NoTicket = params.get('NoTicket') || "No especificada"; 
     const FechaHora = params.get('FechaHora') || "No especificada";
     const Identificacion = params.get('Identificacion') || "No especificada";
-    const cliente = params.get('cliente') || "cliente no especificada"; 
+    const cliente = params.get('cliente') || "No especificada"; 
     const FormaPago = params.get('FormaPago') || "No especificada";
      
    
