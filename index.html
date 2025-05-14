@@ -122,7 +122,7 @@ th, td {
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 2.1</h2>
+      <h2>PVC 2.2</h2>
       <h3 id="ciudad">Ciudad no especificada</h3>
     </div>
 
@@ -174,11 +174,9 @@ th, td {
       </thead>
       <tbody id="DetalleVenta"></tbody>
     </table>
-
+<br>
     <div class="item">
-      <br>
-      <span><b>Total Artículos:</b></span>
-      <span id="NArticulos"></span>
+       <span><b>Total Artículos:</b></span><span id="TotalArticulos"></span>
     </div>
 
     <div class="divider"></div>
@@ -218,6 +216,7 @@ th, td {
     const Identificacion = params.get('Identificacion') || "No especificada";
     const cliente = params.get('cliente') || "No especificado"; 
     const FormaPago = params.get('FormaPago') || "No especificado";
+    const  TotalArticulos = params.get(' TotalArticulos') || "0";
     const DetalleVenta = params.get('DetalleVenta') || "No hay ventas";
      
      const SubTotal = params.get('SubTotal') || "$0.00";
@@ -241,8 +240,9 @@ th, td {
      document.getElementById("Identificacion").textContent = Identificacion;
      document.getElementById("cliente").textContent = cliente;
      document.getElementById("FormaPago").textContent = FormaPago;
+    
+     document.getElementById(" TotalArticulos").innerHTML =  TotalArticulos;
      document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
-
      document.getElementById("SubTotal").innerHTML = SubTotal;
      document.getElementById("Flete").innerHTML = Flete;
      document.getElementById("Descuento").innerHTML = Descuento;
