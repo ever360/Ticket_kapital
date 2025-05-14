@@ -6,87 +6,83 @@
   <title>Ticket_kapital</title>
   <style>
 .ticket {
-  font-family: monospace;
-  font-size: 12px;
-  width: 280px;
-  margin: 0 auto;
-  border: 1px solid #000;
-  padding: 10px;
-  position: relative;
-  overflow: hidden; /* Para evitar que el contenido se desborde */
-}
+      font-family: monospace;
+      font-size: 12px;
+      width: 280px;
+      margin: 0 auto;
+      border: 1px solid #000;
+      padding: 10px;
+      position: relative;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed; /* Para evitar que las celdas se expandan demasiado */
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-th, td {
-  padding: 4px;
-  border: 1px solid #ddd;
-  text-align: left;
-  word-wrap: break-word; /* Para ajustar el texto largo */
-  overflow: hidden; /* Prevenir el desbordamiento */
-  white-space: nowrap; /* Evitar que las celdas se expandan horizontalmente */
-}
+    th, td {
+      padding: 4px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
 
-.ticket-header, .ticket-footer {
-  text-align: center;
-}
+    .ticket-header, .ticket-footer {
+      text-align: center;
+    }
 
-.ticket-header h2, .ticket-footer p {
-  margin: 5px 0;
-}
+    .ticket-header h2, .ticket-footer p {
+      margin: 5px 0;
+    }
 
-.divider {
-  border-top: 1px dashed #000;
-  margin: 10px 0;
-}
+    .divider {
+      border-top: 1px dashed #000;
+      margin: 10px 0;
+    }
 
-.item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3px;
-}
+    .item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+    }
 
-.item span {
-  flex: 1;
-}
+    .item span {
+      flex: 1;
+    }
 
-.subtotal, .total {
-  font-weight: bold;
-}
+    .subtotal, .total {
+      font-weight: bold;
+    }
 
-.logo {
-  text-align: center;
-  margin-top: 10px;
-}
+    .logo {
+      text-align: center;
+      margin-top: 10px;
+    }
 
-.logo img {
-  width: 70px;
-  height: auto;
-}
+    .logo img {
+      width: 70px;
+      height: auto;
+    }
 
-.btn-compartir {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 25px;
-  cursor: pointer;
-}
+    .btn-compartir {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 25px;
+      cursor: pointer;
+    }
 
-.btn-compartir img {
-  width: 100%;
-  height: auto;
-}
+    .btn-compartir img {
+      width: 100%;
+      height: auto;
+    }
 
-#DetalleVenta tr td {
-  padding: 3px; /* Ajusta el tamaño del padding para que se ajuste mejor */
-}
+     
+    
+    #printButton {
+      display: block;
+      margin: 10px auto;
+    }
 
-
-  
   </style>
 </head>
 <body>
@@ -122,7 +118,7 @@ th, td {
     </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 2.3</h2>
+      <h2>PVC 2.4</h2>
       <h3 id="ciudad">Ciudad no especificada</h3>
     </div>
 
