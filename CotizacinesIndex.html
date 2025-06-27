@@ -66,21 +66,6 @@
       cursor: pointer;
       text-align: center;
       display: block;
-      transition: background-color 0.3s;
-    }
-    .btn-compartir:hover {
-      background-color: #218838;
-    }
-    .btn-compartir:disabled {
-      background-color: #6c757d;
-      cursor: not-allowed;
-    }
-
-    /* Ocultar botón al imprimir */
-    @media print {
-      .btn-compartir {
-        display:   !important;
-      }
     }
   </style>
 </head>
@@ -99,10 +84,10 @@
     </div>
 
     <div class="company-info">
-      <strong>CIELO RAZOS PVC 1</strong><br>
+      <strong>CIELO RAZOS  PVC</strong><br>
       Calle 123, Ciudad<br>
       Tel: 123-456-7890<br>
-      DIRECCIÓN CALLE 11-11
+     DIRECION CALLE 11-11
     </div>
   </div>
 
@@ -111,10 +96,10 @@
   <p><strong>Cliente:</strong> Juan Pérez<br>
      <strong>Fecha:</strong> 14/05/2025<br>
      <strong>Dirección:</strong> Av. Principal #456, Ciudad</p>
-     <br>
-     <p>
-       Para 50 mts cuadrados la cantidad sugerida es de:
-     </p>
+     <BR>
+     <P>
+       Para 50 mts cuadrdos la cantidad sugerida es de
+     </P>
 
   <table>
     <tr>
@@ -122,7 +107,7 @@
       <th>Cantidad</th>
     </tr>
     <tr>
-      <td>LÁMINAS</td>
+      <td>LAMINAS </td>
       <td>30</td>
     </tr>
     <tr>
@@ -138,7 +123,7 @@
       <td>3</td>
     </tr>
      <tr>
-      <td>ÁNGULOS</td>
+      <td>ANGULOS</td>
       <td>3</td>
     </tr>
     <tr>
@@ -158,126 +143,26 @@
     <p>Esta cotización tiene una validez de 5 días. Los precios pueden variar según disponibilidad. No incluye instalación.</p>
   </div>
 
-  <button class="btn-compartir" id="btnCompartirPDF" onclick="compartirPDF()">📄 Compartir PDF</button>
+  <button class="btn-compartir" onclick="compartir()">Compartir cotización</button>
 
   <div class="footer">
     Gracias por confiar en nosotros. <br>
     CIELO RAZOS PVC – Calidad que resalta tu techo.
   </div>
 
-  <!-- Librerías CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
   <script>
-    function compartirPDF() {
-      const boton = document.getElementById('btnCompartirPDF');
-      boton.disabled = true;
-      boton.textContent = '⏳ Generando PDF...';
-
-      // Obtener el elemento completo del documento
-      const elemento = document.body;
-      
-      html2canvas(elemento, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: '#ffffff',
-          width: elemento.scrollWidth,
-          height: elemento.scrollHeight
-      }).then(function(canvas) {
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF({
-              orientation: 'portrait',
-              unit: 'mm',
-              format: 'a4'
-          });
-
-          const imgData = canvas.toDataURL('image/png');
-          const imgWidth = 210; // Ancho A4 en mm
-          const pageHeight = 295; // Alto A4 en mm
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
-          let heightLeft = imgHeight;
-
-          let position = 0;
-
-          // Agregar primera página
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-
-          // Si el contenido es muy largo, agregar páginas adicionales
-          while (heightLeft >= 0) {
-              position = heightLeft - imgHeight;
-              pdf.addPage();
-              pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-              heightLeft -= pageHeight;
-          }
-          
-          // Crear blob del PDF
-          const pdfBlob = pdf.output('blob');
-          const file = new File([pdfBlob], 'cotizacion_cielo_razos.pdf', { type: "application/pdf" });
-
-          // Intentar compartir usando Web Share API
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-              navigator.share({
-                  files: [file],
-                  title: 'Cotización - CIELO RAZOS PVC',
-                  text: 'Cotización para cielo rasos - Juan Pérez'
-              })
-              .then(() => {
-                  console.log('PDF compartido correctamente');
-                  boton.disabled = false;
-                  boton.textContent = '✅ Compartido';
-                  setTimeout(() => {
-                      boton.textContent = '📄 Compartir PDF';
-                  }, 2000);
-              })
-              .catch((error) => {
-                  console.log('Error al compartir PDF:', error);
-                  // Fallback: descargar PDF y mostrar mensaje
-                  descargarPDF(pdf);
-              });
-          } else {
-              // Fallback: descargar el PDF
-              descargarPDF(pdf);
-          }
-      }).catch(function(error) {
-          console.error('Error al generar PDF:', error);
-          boton.disabled = false;
-          boton.textContent = '❌ Error';
-          setTimeout(() => {
-              boton.textContent = '📄 Compartir PDF';
-          }, 2000);
-      });
-    }
-
-    function descargarPDF(pdf) {
-      const boton = document.getElementById('btnCompartirPDF');
-      
-      // Descargar el PDF
-      pdf.save('cotizacion_cielo_razos.pdf');
-      
-      // Mostrar mensaje de WhatsApp como alternativa
-      setTimeout(() => {
-          const mensaje = `📋 *COTIZACIÓN CIELO RAZOS PVC*
-          
-👤 Cliente: Juan Pérez
-📅 Fecha: 14/05/2025
-📏 Área: 50 m²
-💰 Total: $509.60
-
-✅ He generado el PDF de la cotización para ti.
-
-📞 Para más información contacta:
-Tel: 123-456-7890`;
-
-          if (confirm('PDF descargado. ¿Deseas compartir los detalles por WhatsApp?')) {
-              const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
-              window.open(urlWhatsApp, '_blank');
-          }
-          
-          boton.disabled = false;
-          boton.textContent = '📄 Compartir PDF';
-      }, 1000);
+    function compartir() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Cotización - CIELO RAZOS PVC ',
+          text: 'Consulta esta cotización de cielo rasos.',
+          url: window.location.href
+        })
+        .then(() => console.log('Compartido correctamente'))
+        .catch((error) => console.error('Error al compartir:', error));
+      } else {
+        alert('La opción de compartir no está disponible en este dispositivo.');
+      }
     }
   </script>
 
