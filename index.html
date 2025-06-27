@@ -1,5 +1,5 @@
 
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -108,12 +108,6 @@
     <div class="botones-compartir">
       <div class="btn-compartir" id="btnCompartirImagen" title="Compartir PDF por WhatsApp">
         <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir PDF">
-      </div>
-      <div class="btn-compartir" id="btnCompartirWhatsApp" title="Compartir por WhatsApp">
-        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDNi40NzcgMiAyIDYuNDc3IDIgMTJDMiAxNC4zMTEgMi43ODUgMTYuNDM0IDQuMDU2IDE4LjE5NEwzIDIxTDUuODA2IDE5Ljk0NEMxLjU3IDE5LjI1IDEyIDEyIDEyWk0xMiAyMkMxNy41MjMgMjIgMjIgMTcuNTIzIDIyIDEyQzIyIDYuNDc3IDE3LjUyMyAyIDEyIDJaIiBmaWxsPSIjMjVEMzY2Ii8+CjxwYXRoIGQ9Ik04LjUgMTIuNUw5IDE0SDE1TDE1LjUgMTIuNUgxMy41SDE4TDE2IDkuNUgxMC41TDguNSAxMi41WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+" alt="WhatsApp">
-      </div>
-      <div class="btn-compartir" id="btnCompartirPDF" title="Compartir como PDF">
-        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgMkg0QzIuOSAyIDIgMi45IDIgNFYyMEMyIDIxLjEgMi45IDIyIDQgMjJIMjBDMjEuMSAyMiAyMiAyMS4xIDIyIDIwVjhMMTYgMkg2WiIgZmlsbD0iI0ZGNTc1NyIvPgo8cGF0aCBkPSJNMTYgMlYxMkg4VjEwSDZWMTJIMTZWOUwxNiAyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+" alt="PDF">
       </div>
     </div>
 
@@ -248,9 +242,19 @@
       document.getElementById("Cambio").innerHTML = Cambio;
     }
 
+    // Función para limpiar texto para nombre de archivo
+    function limpiarTextoParaArchivo(texto) {
+        return texto.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_').substring(0, 50);
+    }
+
     // Función para compartir como PDF (botón principal)
     document.getElementById('btnCompartirImagen').addEventListener('click', function() {
         const facturaElement = document.querySelector('.ticket');
+        
+        // Crear nombre personalizado del archivo
+        const clienteLimpio = limpiarTextoParaArchivo(cliente);
+        const ciudadLimpia = limpiarTextoParaArchivo(ciudad);
+        const nombreArchivo = `Ticket_${NoTicket}_${clienteLimpio}_Cielo_Razos_PVC_${ciudadLimpia}.pdf`;
         
         html2canvas(facturaElement, {
             scale: 2,
@@ -272,13 +276,13 @@
             
             // Crear blob del PDF
             const pdfBlob = pdf.output('blob');
-            const file = new File([pdfBlob], `ticket_${NoTicket}.pdf`, { type: "application/pdf" });
+            const file = new File([pdfBlob], nombreArchivo, { type: "application/pdf" });
 
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 navigator.share({
                     files: [file],
-                    title: `Ticket PDF #${NoTicket}`,
-                    text: `Comprobante de compra - Cliente: ${cliente}`,
+                    title: `Ticket PDF #${NoTicket} - ${cliente}`,
+                    text: `Comprobante de compra - Cliente: ${cliente} - Cielo Razos PVC - ${ciudad}`,
                 })
                 .then(() => console.log('PDF compartido correctamente.'))
                 .catch((error) => {
@@ -288,7 +292,7 @@
                 });
             } else {
                 // Fallback: descargar PDF y abrir WhatsApp
-                pdf.save(`ticket_${NoTicket}.pdf`);
+                pdf.save(nombreArchivo);
                 setTimeout(() => {
                     abrirWhatsAppConMensaje();
                 }, 1000);
@@ -302,13 +306,15 @@
         
 📋 Ticket: ${NoTicket}
 👤 Cliente: ${cliente}
+🏢 Cielo Razos PVC 2.4
+🌍 Ciudad: ${ciudad}
 📅 Fecha: ${FechaHora}
 💰 Total: ${Total}
 💳 Pago: ${FormaPago}
 
-✅ Gracias por tu compra en Cielo Razos PVC 2.4
+✅ Gracias por tu compra
 
-📄 He generado el PDF del ticket para ti.`;
+📄 PDF del ticket generado exitosamente.`;
 
         const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
         window.open(urlWhatsApp, '_blank');
@@ -368,6 +374,10 @@
     window.onload = () => {
         window.print();
     };
+  </script>
+  
+</body>
+</html>
   </script>
   
 </body>
