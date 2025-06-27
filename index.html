@@ -63,12 +63,20 @@
       height: auto;
     }
 
-    .btn-compartir {
+    .botones-compartir {
       position: absolute;
       top: 5px;
       right: 5px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .btn-compartir {
       width: 25px;
       cursor: pointer;
+      padding: 2px;
+      border-radius: 3px;
+      background: #f0f0f0;
     }
 
     .btn-compartir img {
@@ -76,49 +84,41 @@
       height: auto;
     }
 
-     
+    .btn-compartir:hover {
+      background: #e0e0e0;
+    }
     
     #printButton {
       display: block;
       margin: 10px auto;
     }
 
+    /* Ocultar botones al imprimir */
+    @media print {
+      .botones-compartir {
+        display: none !important;
+      }
+    }
+
   </style>
 </head>
 <body>
   <div class="ticket">
-    <div class="btn-compartir" id="btnCompartir">
-      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
+    <div class="botones-compartir">
+      <div class="btn-compartir" id="btnCompartirImagen" title="Compartir como imagen">
+        <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir Imagen">
+      </div>
+      <div class="btn-compartir" id="btnCompartirWhatsApp" title="Compartir por WhatsApp">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDNi40NzcgMiAyIDYuNDc3IDIgMTJDMiAxNC4zMTEgMi43ODUgMTYuNDM0IDQuMDU2IDE4LjE5NEwzIDIxTDUuODA2IDE5Ljk0NEMxLjU3IDE5LjI1IDEyIDEyIDEyWk0xMiAyMkMxNy41MjMgMjIgMjIgMTcuNTIzIDIyIDEyQzIyIDYuNDc3IDE3LjUyMyAyIDEyIDJaIiBmaWxsPSIjMjVEMzY2Ii8+CjxwYXRoIGQ9Ik04LjUgMTIuNUw5IDE0SDE1TDE1LjUgMTIuNUgxMy41SDE4TDE2IDkuNUgxMC41TDguNSAxMi41WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+" alt="WhatsApp">
+      </div>
+      <div class="btn-compartir" id="btnCompartirPDF" title="Compartir como PDF">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgMkg0QzIuOSAyIDIgMi45IDIgNFYyMEMyIDIxLjEgMi45IDIyIDQgMjJIMjBDMjEuMSAyMiAyMiAyMS4xIDIyIDIwVjhMMTYgMkg2WiIgZmlsbD0iI0ZGNTc1NyIvPgo8cGF0aCBkPSJNMTYgMlYxMkg4VjEwSDZWMTJIMTZWOUwxNiAyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+" alt="PDF">
+      </div>
     </div>
- <!-- Librería para convertir HTML a imagen -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-    <script>
-        document.getElementById('btnCompartir').addEventListener('click', function() {
-            const facturaElement = document.querySelector('.ticket');
-
-            html2canvas(facturaElement).then(function(canvas) {
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], "factura.png", { type: "image/png" });
-
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({
-                            files: [file],
-                            title: 'Comprobante de Pago',
-                            text: 'Aquí tienes tu comprobante de pago.',
-                        })
-                        .then(() => console.log('Compartido correctamente.'))
-                        .catch((error) => console.log('Error al compartir:', error));
-                    } else {
-                        alert("Tu navegador no soporta la API de compartición.");
-                    }
-                });
-            });
-        });
-    </script>
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC 2.4</h2>
+      <h2>PVC 2.5</h2>
       <h3 id="ciudad">Ciudad no especificada</h3>
     </div>
 
@@ -161,7 +161,6 @@
     <table>
       <thead>
         <tr>
-        
           <th style="text-align: left;">Cnt.</th>
           <th>Art.</th>
           <th style="text-align: right;">V Unt.</th>
@@ -191,17 +190,15 @@
     </div>
   </div>
 
-  
+  <!-- Librerías CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-  
+  <script>
+    // Obtener los parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-   <script>
-           // Obtener los parámetros de la URL
-   const params = new URLSearchParams(window.location.search);
-
-          // Declarar variable con el valor del parámetro
-    
+    // Declarar variables con los valores de los parámetros
     const representante = params.get('representante') || "No especificado";
     const ciudad = params.get('ciudad') || "No especificada";
     const Nit = params.get('Nit') || "No especificado";  
@@ -214,53 +211,141 @@
     const FormaPago = params.get('FormaPago') || "No especificado";
     const TotalArticulos = params.get('TotalArticulos') || "0";
     const DetalleVenta = params.get('DetalleVenta') || "No hay ventas";
-     
-     const SubTotal = params.get('SubTotal') || "$0.00";
-     const Flete = params.get('Flete') || " $0.00";
-     const Descuento = params.get('Descuento') || "$0.00";
-     const Total = params.get('Total') || "$0.00";
-     const Efectivo = params.get('Efectivo') || "$0.00";
-     const Cambio = params.get('Cambio') || "$0.00";
-     
-   
-  
+    const SubTotal = params.get('SubTotal') || "$0.00";
+    const Flete = params.get('Flete') || " $0.00";
+    const Descuento = params.get('Descuento') || "$0.00";
+    const Total = params.get('Total') || "$0.00";
+    const Efectivo = params.get('Efectivo') || "$0.00";
+    const Cambio = params.get('Cambio') || "$0.00";
 
-          // Mostrar en el HTML
-     document.getElementById("representante").textContent = representante;
-     document.getElementById("Nit").textContent = Nit;
-     document.getElementById("telefono").textContent = telefono;
-     document.getElementById("direccion").textContent = direccion;
-     document.getElementById("ciudad").textContent = ciudad;
-     document.getElementById("NoTicket").textContent = NoTicket;
-     document.getElementById("FechaHora").textContent = FechaHora;
-     document.getElementById("Identificacion").textContent = Identificacion;
-     document.getElementById("cliente").textContent = cliente;
-     document.getElementById("FormaPago").textContent = FormaPago;
-    
-     document.getElementById("TotalArticulos").textContent = TotalArticulos;
-     document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
-     document.getElementById("SubTotal").textContent = SubTotal;
-     document.getElementById("Flete").textContent = Flete;
-     document.getElementById("Descuento").textContent = Descuento;
-     document.getElementById("Total").textContent = Total;
-     document.getElementById("Efectivo").textContent = Efectivo;
-     document.getElementById("Cambio").textContent = Cambio;
+    // Mostrar en el HTML
+    document.getElementById("representante").textContent = representante;
+    document.getElementById("Nit").textContent = Nit;
+    document.getElementById("telefono").textContent = telefono;
+    document.getElementById("direccion").textContent = direccion;
+    document.getElementById("ciudad").textContent = ciudad;
+    document.getElementById("NoTicket").textContent = NoTicket;
+    document.getElementById("FechaHora").textContent = FechaHora;
+    document.getElementById("Identificacion").textContent = Identificacion;
+    document.getElementById("cliente").textContent = cliente;
+    document.getElementById("FormaPago").textContent = FormaPago;
+    document.getElementById("TotalArticulos").textContent = TotalArticulos;
+    document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
+    document.getElementById("SubTotal").textContent = SubTotal;
+    document.getElementById("Flete").textContent = Flete;
+    document.getElementById("Descuento").textContent = Descuento;
+    document.getElementById("Total").textContent = Total;
+    document.getElementById("Efectivo").textContent = Efectivo;
+    document.getElementById("Cambio").textContent = Cambio;
 
     // Condición para ocultar Efectivo y Cambio si la forma de pago es transferencia
-if (FormaPago.toLowerCase() === "transferencia") {
-  document.getElementById("Efectivo").style.display = "none";
-  document.getElementById("Cambio").style.display = "none";
-} else {
-  document.getElementById("Efectivo").innerHTML = Efectivo;
-  document.getElementById("Cambio").innerHTML = Cambio;
-}  
+    if (FormaPago.toLowerCase() === "transferencia") {
+      document.getElementById("Efectivo").style.display = "none";
+      document.getElementById("Cambio").style.display = "none";
+    } else {
+      document.getElementById("Efectivo").innerHTML = Efectivo;
+      document.getElementById("Cambio").innerHTML = Cambio;
+    }
 
-       
-      // 👉 Llamar automáticamente al abrir la página
-  window.onload = () => {
-  window.print();
-};
-    </script>
+    // Función para compartir como imagen (tu código original mejorado)
+    document.getElementById('btnCompartirImagen').addEventListener('click', function() {
+        const facturaElement = document.querySelector('.ticket');
+
+        html2canvas(facturaElement, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff'
+        }).then(function(canvas) {
+            canvas.toBlob(function(blob) {
+                const file = new File([blob], `ticket_${NoTicket}.png`, { type: "image/png" });
+
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        files: [file],
+                        title: `Ticket #${NoTicket}`,
+                        text: `Comprobante de compra - Cliente: ${cliente}`,
+                    })
+                    .then(() => console.log('Compartido correctamente.'))
+                    .catch((error) => console.log('Error al compartir:', error));
+                } else {
+                    // Fallback: descargar la imagen
+                    const link = document.createElement('a');
+                    link.download = `ticket_${NoTicket}.png`;
+                    link.href = canvas.toDataURL();
+                    link.click();
+                }
+            });
+        });
+    });
+
+    // Función para compartir por WhatsApp directo
+    document.getElementById('btnCompartirWhatsApp').addEventListener('click', function() {
+        const mensaje = `🧾 *COMPROBANTE DE COMPRA*
+        
+📋 Ticket: ${NoTicket}
+👤 Cliente: ${cliente}
+📅 Fecha: ${FechaHora}
+💰 Total: ${Total}
+💳 Pago: ${FormaPago}
+
+✅ Gracias por tu compra en Cielo Razos PVC 2.4`;
+
+        const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+        window.open(urlWhatsApp, '_blank');
+    });
+
+    // Función para compartir como PDF
+    document.getElementById('btnCompartirPDF').addEventListener('click', function() {
+        const facturaElement = document.querySelector('.ticket');
+        
+        html2canvas(facturaElement, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff'
+        }).then(function(canvas) {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: [80, 120] // Tamaño tipo ticket
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = 75;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            pdf.addImage(imgData, 'PNG', 2.5, 5, imgWidth, imgHeight);
+            
+            // Crear blob del PDF
+            const pdfBlob = pdf.output('blob');
+            const file = new File([pdfBlob], `ticket_${NoTicket}.pdf`, { type: "application/pdf" });
+
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file],
+                    title: `Ticket PDF #${NoTicket}`,
+                    text: `Comprobante de compra - Cliente: ${cliente}`,
+                })
+                .then(() => console.log('PDF compartido correctamente.'))
+                .catch((error) => {
+                    console.log('Error al compartir PDF:', error);
+                    // Fallback: descargar el PDF
+                    pdf.save(`ticket_${NoTicket}.pdf`);
+                });
+            } else {
+                // Fallback: descargar el PDF
+                pdf.save(`ticket_${NoTicket}.pdf`);
+            }
+        });
+    });
+
+    // Auto-print al cargar (tu funcionalidad original)
+    window.onload = () => {
+        window.print();
+    };
+  </script>
   
 </body>
 </html>
+
+
