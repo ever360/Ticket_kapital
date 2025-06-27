@@ -55,7 +55,7 @@
 
     .logo {
       text-align: center;
-      margin-top: 10px;
+      margin: 10px 0;
     }
 
     .logo img {
@@ -63,55 +63,39 @@
       height: auto;
     }
 
-    .btn-compartir {
+    .botones-compartir {
       position: absolute;
       top: 5px;
       right: 5px;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      background: #007BFF;
-      border-radius: 50%;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      gap: 5px;
     }
 
-    .btn-compartir:hover {
-      background: #0056b3;
-      transform: scale(1.1);
-    }
-
-    .btn-compartir.generating {
-      background: #ffc107;
-      animation: pulse 1s infinite;
-    }
-
-    .btn-compartir.success {
-      background: #28a745;
-    }
-
-    .btn-compartir.error {
-      background: #dc3545;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    .btn-compartir {
+      width: 25px;
+      cursor: pointer;
+      padding: 2px;
+      border-radius: 3px;
+      background: #f0f0f0;
     }
 
     .btn-compartir img {
-      width: 20px;
-      height: 20px;
-      filter: brightness(0) invert(1);
+      width: 100%;
+      height: auto;
     }
 
-    /* Ocultar botón al imprimir */
+    .btn-compartir:hover {
+      background: #e0e0e0;
+    }
+    
+    #printButton {
+      display: block;
+      margin: 10px auto;
+    }
+
+    /* Ocultar botones al imprimir */
     @media print {
-      .btn-compartir {
+      .botones-compartir {
         display: none !important;
       }
     }
@@ -120,13 +104,21 @@
 </head>
 <body>
   <div class="ticket">
-    <div class="btn-compartir" id="btnCompartir" title="Compartir PDF">
-      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
+    <div class="botones-compartir">
+      <div class="btn-compartir" id="btnCompartirImagen" title="Compartir PDF por WhatsApp">
+        <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir PDF">
+      </div>
+      <div class="btn-compartir" id="btnCompartirWhatsApp" title="Compartir por WhatsApp">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDNi40NzcgMiAyIDYuNDc3IDIgMTJDMiAxNC4zMTEgMi43ODUgMTYuNDM0IDQuMDU2IDE4LjE5NEwzIDIxTDUuODA2IDE5Ljk0NEMxLjU3IDE5LjI1IDEyIDEyIDEyWk0xMiAyMkMxNy41MjMgMjIgMjIgMTcuNTIzIDIyIDEyQzIyIDYuNDc3IDE3LjUyMyAyIDEyIDJaIiBmaWxsPSIjMjVEMzY2Ii8+CjxwYXRoIGQ9Ik04LjUgMTIuNUw5IDE0SDE1TDE1LjUgMTIuNUgxMy41SDE4TDE2IDkuNUgxMC41TDguNSAxMi41WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+" alt="WhatsApp">
+      </div>
+      <div class="btn-compartir" id="btnCompartirPDF" title="Compartir como PDF">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgMkg0QzIuOSAyIDIgMi45IDIgNFYyMEMyIDIxLjEgMi45IDIyIDQgMjJIMjBDMjEuMSAyMiAyMiAyMS4xIDIyIDIwVjhMMTYgMkg2WiIgZmlsbD0iI0ZGNTc1NyIvPgo8cGF0aCBkPSJNMTYgMlYxMkg4VjEwSDZWMTJIMTZWOUwxNiAyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+" alt="PDF">
+      </div>
     </div>
 
     <div class="ticket-header">
       <h2>Cielo Razos</h2>
-      <h2>PVC-1</h2>
+      <h2>PVC 2.4</h2>
       <h3 id="ciudad">Ciudad no especificada</h3>
     </div>
 
@@ -135,9 +127,9 @@
     </div>
 
     <div class="ticket-header">
-      <h3 id="representante">No especificado</h3>
+      <h3 id= "representante">No especificado</h3>
       <div><b>Nit:</b></div>
-        <div id="Nit"></div>
+        <div  id="Nit"></div>
       <div><b>Telefono</b></div>
       <div id="telefono"></div>
       <div><b>Dirección</b></div> 
@@ -216,6 +208,7 @@
     const FechaHora = params.get('FechaHora') || "No especificada";
     const Identificacion = params.get('Identificacion') || "No especificada";
     const cliente = params.get('cliente') || "No especificado"; 
+    const telefonoCliente = params.get('telefonoCliente') || ""; // Nuevo parámetro para teléfono del cliente
     const FormaPago = params.get('FormaPago') || "No especificado";
     const TotalArticulos = params.get('TotalArticulos') || "0";
     const DetalleVenta = params.get('DetalleVenta') || "No hay ventas";
@@ -250,128 +243,140 @@
     if (FormaPago.toLowerCase() === "transferencia") {
       document.getElementById("Efectivo").style.display = "none";
       document.getElementById("Cambio").style.display = "none";
+    } else {
+      document.getElementById("Efectivo").innerHTML = Efectivo;
+      document.getElementById("Cambio").innerHTML = Cambio;
     }
 
-    // Función para compartir PDF
-    document.getElementById('btnCompartir').addEventListener('click', function() {
-        const btnCompartir = document.getElementById('btnCompartir');
-        const ticketElement = document.querySelector('.ticket');
+    // Función para compartir como PDF (botón principal)
+    document.getElementById('btnCompartirImagen').addEventListener('click', function() {
+        const facturaElement = document.querySelector('.ticket');
         
-        // Cambiar estado del botón
-        btnCompartir.classList.add('generating');
-        btnCompartir.title = 'Generando PDF...';
-        
-        html2canvas(ticketElement, {
-            scale: 3, // Mayor calidad
+        html2canvas(facturaElement, {
+            scale: 2,
             useCORS: true,
-            backgroundColor: '#ffffff',
-            width: ticketElement.scrollWidth,
-            height: ticketElement.scrollHeight
+            backgroundColor: '#ffffff'
         }).then(function(canvas) {
             const { jsPDF } = window.jspdf;
-            
-            // Crear PDF en formato ticket (80mm de ancho)
             const pdf = new jsPDF({
                 orientation: 'portrait',
                 unit: 'mm',
-                format: [80, 150] // Ancho fijo, alto ajustable
+                format: [80, 120] // Tamaño tipo ticket
             });
 
             const imgData = canvas.toDataURL('image/png');
-            const imgWidth = 75; // Ancho del ticket menos márgenes
+            const imgWidth = 75;
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-            // Ajustar el tamaño del PDF según el contenido
-            if (imgHeight > 145) {
-                pdf.internal.pageSize.height = imgHeight + 5;
-            }
-
-            pdf.addImage(imgData, 'PNG', 2.5, 2.5, imgWidth, imgHeight);
-            
-            // Crear nombre del archivo con cliente y ciudad
-            const nombreCliente = cliente.replace(/[^a-zA-Z0-9]/g, '_');
-            const nombreCiudad = ciudad.replace(/[^a-zA-Z0-9]/g, '_');
-            const nombreArchivo = `${nombreCliente}_PVC_${nombreCiudad}.pdf`;
+            pdf.addImage(imgData, 'PNG', 2.5, 5, imgWidth, imgHeight);
             
             // Crear blob del PDF
             const pdfBlob = pdf.output('blob');
-            const file = new File([pdfBlob], nombreArchivo, { type: "application/pdf" });
+            const file = new File([pdfBlob], `ticket_${NoTicket}.pdf`, { type: "application/pdf" });
 
-            // Intentar compartir usando Web Share API
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 navigator.share({
                     files: [file],
-                    title: `Ticket ${cliente} - PVC ${ciudad}`,
-                    text: `Comprobante de compra - Cliente: ${cliente}, Ciudad: ${ciudad}`
+                    title: `Ticket PDF #${NoTicket}`,
+                    text: `Comprobante de compra - Cliente: ${cliente}`,
                 })
-                .then(() => {
-                    console.log('PDF compartido correctamente');
-                    btnCompartir.classList.remove('generating');
-                    btnCompartir.classList.add('success');
-                    btnCompartir.title = '¡Compartido!';
-                    
-                    setTimeout(() => {
-                        btnCompartir.classList.remove('success');
-                        btnCompartir.title = 'Compartir PDF';
-                    }, 2000);
-                })
+                .then(() => console.log('PDF compartido correctamente.'))
                 .catch((error) => {
                     console.log('Error al compartir PDF:', error);
-                    manejarErrorCompartir(pdf, nombreArchivo, btnCompartir);
+                    // Fallback: abrir WhatsApp con mensaje al cliente específico
+                    abrirWhatsAppAlCliente();
                 });
             } else {
-                // Fallback: descargar PDF
-                manejarErrorCompartir(pdf, nombreArchivo, btnCompartir);
+                // Fallback: descargar PDF y abrir WhatsApp al cliente específico
+                pdf.save(`ticket_${NoTicket}.pdf`);
+                setTimeout(() => {
+                    abrirWhatsAppAlCliente();
+                }, 1000);
             }
-        }).catch(function(error) {
-            console.error('Error al generar PDF:', error);
-            btnCompartir.classList.remove('generating');
-            btnCompartir.classList.add('error');
-            btnCompartir.title = 'Error al generar PDF';
-            
-            setTimeout(() => {
-                btnCompartir.classList.remove('error');
-                btnCompartir.title = 'Compartir PDF';
-            }, 3000);
         });
     });
 
-    // Función para manejar errores o fallback
-    function manejarErrorCompartir(pdf, nombreArchivo, btnCompartir) {
-        // Descargar el PDF
-        pdf.save(nombreArchivo);
+    // Función para abrir WhatsApp con mensaje al cliente específico
+    function abrirWhatsAppAlCliente() {
+        const mensaje = `🧾 *COMPROBANTE DE COMPRA*
         
-        btnCompartir.classList.remove('generating');
-        btnCompartir.classList.add('success');
-        btnCompartir.title = 'PDF descargado';
-        
-        // Mostrar opción de WhatsApp
-        setTimeout(() => {
-            const mensaje = `🧾 *COMPROBANTE PVC - ${ciudad.toUpperCase()}*
-            
 📋 Ticket: ${NoTicket}
 👤 Cliente: ${cliente}
 📅 Fecha: ${FechaHora}
 💰 Total: ${Total}
 💳 Pago: ${FormaPago}
-🏙️ Ciudad: ${ciudad}
 
-✅ Ticket generado para ${cliente}
-📄 PDF: ${nombreArchivo}
+✅ Gracias por tu compra en Cielo Razos PVC 2.4
 
-Gracias por tu compra en Cielo Razos PVC`;
+📄 He generado el PDF del ticket para ti.`;
 
-            if (confirm('PDF descargado. ¿Deseas compartir los detalles por WhatsApp?')) {
-                const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
-                window.open(urlWhatsApp, '_blank');
-            }
-            
-            btnCompartir.classList.remove('success');
-            btnCompartir.title = 'Compartir PDF';
-        }, 1500);
+        // Si hay teléfono del cliente, enviar directamente a ese número
+        let urlWhatsApp;
+        if (telefonoCliente && telefonoCliente !== "") {
+            // Limpiar el número de teléfono (quitar espacios, guiones, etc.)
+            const numeroLimpio = telefonoCliente.replace(/\D/g, '');
+            // Agregar código de país si no lo tiene (asumiendo Colombia +57)
+            const numeroCompleto = numeroLimpio.startsWith('57') ? numeroLimpio : '57' + numeroLimpio;
+            urlWhatsApp = `https://wa.me/${numeroCompleto}?text=${encodeURIComponent(mensaje)}`;
+        } else {
+            // Si no hay teléfono, abrir WhatsApp sin número específico
+            urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+        }
+        
+        window.open(urlWhatsApp, '_blank');
     }
 
-    // Auto-print al cargar
+    // Función para compartir por WhatsApp directo
+    document.getElementById('btnCompartirWhatsApp').addEventListener('click', function() {
+        abrirWhatsAppConMensaje();
+    });
+
+    // Función para compartir como PDF
+    document.getElementById('btnCompartirPDF').addEventListener('click', function() {
+        const facturaElement = document.querySelector('.ticket');
+        
+        html2canvas(facturaElement, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff'
+        }).then(function(canvas) {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: [80, 120] // Tamaño tipo ticket
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = 75;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            pdf.addImage(imgData, 'PNG', 2.5, 5, imgWidth, imgHeight);
+            
+            // Crear blob del PDF
+            const pdfBlob = pdf.output('blob');
+            const file = new File([pdfBlob], `ticket_${NoTicket}.pdf`, { type: "application/pdf" });
+
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file],
+                    title: `Ticket PDF #${NoTicket}`,
+                    text: `Comprobante de compra - Cliente: ${cliente}`,
+                })
+                .then(() => console.log('PDF compartido correctamente.'))
+                .catch((error) => {
+                    console.log('Error al compartir PDF:', error);
+                    // Fallback: descargar el PDF
+                    pdf.save(`ticket_${NoTicket}.pdf`);
+                });
+            } else {
+                // Fallback: descargar el PDF
+                pdf.save(`ticket_${NoTicket}.pdf`);
+            }
+        });
+    });
+
+    // Auto-print al cargar (tu funcionalidad original)
     window.onload = () => {
         window.print();
     };
