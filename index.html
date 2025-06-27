@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -63,39 +63,37 @@
       height: auto;
     }
 
-    .botones-compartir {
+    .boton-compartir {
       position: absolute;
-      top: 5px;
-      right: 5px;
-      display: flex;
-      gap: 5px;
+      top: 10px;
+      right: 10px;
     }
 
     .btn-compartir {
-      width: 25px;
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
       cursor: pointer;
-      padding: 2px;
-      border-radius: 3px;
-      background: #f0f0f0;
-    }
-
-    .btn-compartir img {
-      width: 100%;
-      height: auto;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     .btn-compartir:hover {
-      background: #e0e0e0;
-    }
-    
-    #printButton {
-      display: block;
-      margin: 10px auto;
+      background: #1fb855;
     }
 
-    /* Ocultar botones al imprimir */
+    .btn-compartir:active {
+      transform: translateY(1px);
+    }
+
+    /* Ocultar botón al imprimir */
     @media print {
-      .botones-compartir {
+      .boton-compartir {
         display: none !important;
       }
     }
@@ -104,16 +102,10 @@
 </head>
 <body>
   <div class="ticket">
-    <div class="botones-compartir">
-      <div class="btn-compartir" id="btnCompartirImagen" title="Compartir PDF por WhatsApp">
-        <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir PDF">
-      </div>
-      <div class="btn-compartir" id="btnCompartirWhatsApp" title="Compartir por WhatsApp">
-        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDNi40NzcgMiAyIDYuNDc3IDIgMTJDMiAxNC4zMTEgMi43ODUgMTYuNDM0IDQuMDU2IDE4LjE5NEwzIDIxTDUuODA2IDE5Ljk0NEMxLjU3IDE5LjI1IDEyIDEyIDEyWk0xMiAyMkMxNy41MjMgMjIgMjIgMTcuNTIzIDIyIDEyQzIyIDYuNDc3IDE3LjUyMyAyIDEyIDJaIiBmaWxsPSIjMjVEMzY2Ii8+CjxwYXRoIGQ9Ik04LjUgMTIuNUw5IDE0SDE1TDE1LjUgMTIuNUgxMy41SDE4TDE2IDkuNUgxMC41TDguNSAxMi41WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+" alt="WhatsApp">
-      </div>
-      <div class="btn-compartir" id="btnCompartirPDF" title="Compartir como PDF">
-        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgMkg0QzIuOSAyIDIgMi45IDIgNFYyMEMyIDIxLjEgMi45IDIyIDQgMjJIMjBDMjEuMSAyMiAyMiAyMS4xIDIyIDIwVjhMMTYgMkg2WiIgZmlsbD0iI0ZGNTc1NyIvPgo8cGF0aCBkPSJNMTYgMlYxMkg4VjEwSDZWMTJIMTZWOUwxNiAyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+" alt="PDF">
-      </div>
+    <div class="boton-compartir">
+      <button class="btn-compartir" id="btnCompartir" title="Compartir ticket">
+        📱 Compartir
+      </button>
     </div>
 
     <div class="ticket-header">
@@ -127,9 +119,9 @@
     </div>
 
     <div class="ticket-header">
-      <h3 id= "representante">No especificado</h3>
+      <h3 id="representante">No especificado</h3>
       <div><b>Nit:</b></div>
-        <div  id="Nit"></div>
+        <div id="Nit"></div>
       <div><b>Telefono</b></div>
       <div id="telefono"></div>
       <div><b>Dirección</b></div> 
@@ -242,61 +234,13 @@
     if (FormaPago.toLowerCase() === "transferencia") {
       document.getElementById("Efectivo").style.display = "none";
       document.getElementById("Cambio").style.display = "none";
-    } else {
-      document.getElementById("Efectivo").innerHTML = Efectivo;
-      document.getElementById("Cambio").innerHTML = Cambio;
     }
 
-    // Función para compartir como PDF (botón principal)
-    document.getElementById('btnCompartirImagen').addEventListener('click', function() {
+    // Función única de compartir
+    document.getElementById('btnCompartir').addEventListener('click', function() {
         const facturaElement = document.querySelector('.ticket');
         
-        html2canvas(facturaElement, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff'
-        }).then(function(canvas) {
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF({
-                orientation: 'portrait',
-                unit: 'mm',
-                format: [80, 120] // Tamaño tipo ticket
-            });
-
-            const imgData = canvas.toDataURL('image/png');
-            const imgWidth = 75;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-            pdf.addImage(imgData, 'PNG', 2.5, 5, imgWidth, imgHeight);
-            
-            // Crear blob del PDF
-            const pdfBlob = pdf.output('blob');
-            const file = new File([pdfBlob], `ticket_${NoTicket}.pdf`, { type: "application/pdf" });
-
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({
-                    files: [file],
-                    title: `Ticket PDF #${NoTicket}`,
-                    text: `Comprobante de compra - Cliente: ${cliente}`,
-                })
-                .then(() => console.log('PDF compartido correctamente.'))
-                .catch((error) => {
-                    console.log('Error al compartir PDF:', error);
-                    // Fallback: abrir WhatsApp con mensaje
-                    abrirWhatsAppConMensaje();
-                });
-            } else {
-                // Fallback: descargar PDF y abrir WhatsApp
-                pdf.save(`ticket_${NoTicket}.pdf`);
-                setTimeout(() => {
-                    abrirWhatsAppConMensaje();
-                }, 1000);
-            }
-        });
-    });
-
-    // Función para abrir WhatsApp con mensaje
-    function abrirWhatsAppConMensaje() {
+        // Primero intenta compartir por WhatsApp con mensaje de texto
         const mensaje = `🧾 *COMPROBANTE DE COMPRA*
         
 📋 Ticket: ${NoTicket}
@@ -305,65 +249,38 @@
 💰 Total: ${Total}
 💳 Pago: ${FormaPago}
 
-✅ Gracias por tu compra en Cielo Razos PVC 2.4
+✅ Gracias por tu compra en Cielo Razos PVC 2.4`;
 
-📄 He generado el PDF del ticket para ti.`;
+        // Si el dispositivo soporta Web Share API, intenta compartir
+        if (navigator.share) {
+            navigator.share({
+                title: `Ticket #${NoTicket}`,
+                text: mensaje,
+                url: window.location.href
+            })
+            .then(() => console.log('Contenido compartido exitosamente'))
+            .catch((error) => {
+                console.log('Error al compartir:', error);
+                abrirWhatsApp(mensaje);
+            });
+        } else {
+            // Fallback: abrir WhatsApp directamente
+            abrirWhatsApp(mensaje);
+        }
+    });
 
+    // Función para abrir WhatsApp
+    function abrirWhatsApp(mensaje) {
         const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
         window.open(urlWhatsApp, '_blank');
     }
 
-    // Función para compartir por WhatsApp directo
-    document.getElementById('btnCompartirWhatsApp').addEventListener('click', function() {
-        abrirWhatsAppConMensaje();
-    });
-
-    // Función para compartir como PDF
-    document.getElementById('btnCompartirPDF').addEventListener('click', function() {
-        const facturaElement = document.querySelector('.ticket');
-        
-        html2canvas(facturaElement, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff'
-        }).then(function(canvas) {
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF({
-                orientation: 'portrait',
-                unit: 'mm',
-                format: [80, 120] // Tamaño tipo ticket
-            });
-
-            const imgData = canvas.toDataURL('image/png');
-            const imgWidth = 75;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-            pdf.addImage(imgData, 'PNG', 2.5, 5, imgWidth, imgHeight);
-            
-            // Crear blob del PDF
-            const pdfBlob = pdf.output('blob');
-            const file = new File([pdfBlob], `ticket_${NoTicket}.pdf`, { type: "application/pdf" });
-
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({
-                    files: [file],
-                    title: `Ticket PDF #${NoTicket}`,
-                    text: `Comprobante de compra - Cliente: ${cliente}`,
-                })
-                .then(() => console.log('PDF compartido correctamente.'))
-                .catch((error) => {
-                    console.log('Error al compartir PDF:', error);
-                    // Fallback: descargar el PDF
-                    pdf.save(`ticket_${NoTicket}.pdf`);
-                });
-            } else {
-                // Fallback: descargar el PDF
-                pdf.save(`ticket_${NoTicket}.pdf`);
-            }
-        });
-    });
-
-    // Auto-print al cargar (tu funcionalidad original)
+    // Auto-print al cargar
     window.onload = () => {
         window.print();
     };
+  </script>
+</body>
+</html>
+
+   
