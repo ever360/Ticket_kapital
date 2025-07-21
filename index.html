@@ -202,33 +202,35 @@
     
   
     <!-- Librería para convertir HTML a imagen -->
+    
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+    document.getElementById('btnCompartir').addEventListener('click', function() {
+        const facturaElement = document.querySelector('.ticket'); // aquí corregido
 
-    <script>
-        document.getElementById('btnCompartir').addEventListener('click', function() {
-            const facturaElement = document.querySelector('.invoice-container');
+        html2canvas(facturaElement).then(function(canvas) {
+            canvas.toBlob(function(blob) {
+                const file = new File([blob], "ticket_kapital.png", { type: "image/png" });
 
-            html2canvas(facturaElement).then(function(canvas) {
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], "factura.png", { type: "image/png" });
-
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({
-                            files: [file],
-                            title: 'Comprobante de Pago',
-                            text: 'Aquí tienes tu comprobante de pago.',
-                        })
-                        .then(() => console.log('Compartido correctamente.'))
-                        .catch((error) => console.log('Error al compartir:', error));
-                    } else {
-                        alert("Tu navegador no soporta la API de compartición.");
-                    }
-                });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        files: [file],
+                        title: 'Ticket Kapital',
+                        text: 'Aquí tienes tu comprobante de pago.',
+                    })
+                    .then(() => console.log('Compartido correctamente.'))
+                    .catch((error) => {
+                        console.error('Error al compartir:', error);
+                        alert('Error al compartir el ticket.');
+                    });
+                } else {
+                    alert("Tu navegador no soporta compartir archivos desde la web.");
+                }
             });
         });
-    </script>
-</body>
-</html>
+    });
+</script>
+
 
         
   <script>
