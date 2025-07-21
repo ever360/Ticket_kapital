@@ -205,17 +205,58 @@
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script>
-// Obtener los parámetros de la URL
-const params = new URLSearchParams(window.location.search);
-  
- // Obtener los valores de los parámetros
-        var ciudad = params.has('ciudad') ? params.get('ciudad') : "ciudad no especificado";    
+  // Asignar valores a los campos
+        document.getElementById("fechaPago").textContent = params.get('fechaPago') || "Fecha no especificado";
+        document.getElementById("nombreArrendatario").textContent = params.get('cliente') || "Cliente no especificado";
+        document.getElementById("telefonoArrendatario").textContent = params.get('telefono') || "Teléfono no especificado";
+        document.getElementById("direccionArrendatario").textContent = params.get('direccion') || "Dirección no especificada";
+        document.getElementById("fechaDesde").textContent = params.get('fechaDesde') || "Fechan no especificada";
+        document.getElementById("fechaHasta").textContent = params.get('fechaHasta') || "Fecha no especificada";
+        document.getElementById("MetodoPago").textContent = params.get('MetodoPago') || "no especificado";
+        document.getElementById("Nmes").textContent = params.get('Nmes') || "no especificado";
+        document.getElementById("ValorUni").textContent = params.get('ValorUni') || "no especificado";
+        document.getElementById("TValorAlquiler").textContent = params.get('TValorAlquiler') || "no especificado";
+        document.getElementById("ValorDepo").textContent = params.get('ValorDepo') || "$000.00";
+        document.getElementById("TotalPagar").textContent = params.get('TotalPagar') || "$ 000.00";
+        document.getElementById("ProximoPago").textContent = params.get('ProximoPago') || "no especificado";
+        
+         
+        
+        // Obtener los valores de los parámetros
+        var boleto = params.has('boleto') ? params.get('boleto') : "boleto no especificado";
+        var fechaPago = params.has('fechaPago') ? params.get('fechaPago') : "fechaPago no especificado";
+        var nombreArrendatario = params.has('nombreArrendatario') ? params.get('nombreArrendatario') : "Cliente no especificado";
+        var telefono = params.has('telefono') ? params.get('telefono') : "telefono no especificado";
+        var desde = params.has('desde') ? params.get('desde') : "Fecha no especificado";
+        var hasta = params.has('hasta') ? params.get('hasta') : "Fecha no especificado";
+        var nit_cedula = params.has('nit_cedula') ? params.get('nit_cedula') : "nit_cedula no especificado";
+        var mes = params.has('mes') ? params.get('mes') : "Mes no especificado";
+        var valor = params.has('valor') ? params.get('valor') : "$ 0";
+        var abono = params.has('abono') ? params.get('abono') : "$ 0";
+        var cancelar = params.has('cancelar') ? params.get('cancelar') : "$ 0";
+        var totalPagar = params.has('totalPagar') ? params.get('totalPagar') : "$ 0";
+        var valorPrestamo = params.has('valorPrestamo') ? params.get('valorPrestamo') : "$ 0";
+        var valorAbono = params.has('valorAbono') ? params.get('valorAbono') : "$ 0";
+        var saldoPendiente = params.has('saldoPendiente') ? params.get('saldoPendiente') : "$ 0";
+        var proximoPago = params.has('proximoPago') ? params.get('proximoPago') : "Fecha no especificada";
 
- // Asignar valores a los campos
-        document.getElementById("ciudad").textContent = params.get('ciudad') || "ciudad no especificado";
-
-  // Asignar los valores a los elementos HTML
-        document.getElementById("ciudad").textContent = ciudad;
+        // Asignar los valores a los elementos HTML
+        document.getElementById("boleto").textContent = boleto;
+        document.getElementById("fechaPago").textContent = fechaPago;
+        document.getElementById("nombreArrendatario").textContent = nombreArrendatario;
+        document.getElementById("telefono").textContent = telefono;
+        document.getElementById("desde").textContent = desde;
+        document.getElementById("hasta").textContent = hasta;
+        document.getElementById("nit_cedula").textContent = nit_cedula;
+        document.getElementById("mes").textContent = mes;
+        document.getElementById("valor").textContent = valor;
+        document.getElementById("abono").textContent = abono;
+        document.getElementById("cancelar").textContent = cancelar;
+        document.getElementById("totalPagar").textContent = totalPagar;
+        document.getElementById("valorPrestamo").textContent = valorPrestamo;
+        document.getElementById("valorAbono").textContent = valorAbono;
+        document.getElementById("saldoPendiente").textContent = saldoPendiente;
+        document.getElementById("proximoPago").textContent = proximoPago;
 
     
 
