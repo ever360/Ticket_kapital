@@ -186,7 +186,7 @@
 
     <div class="ticket-footer">
       <p style="text-align: right;"><b>SubTotal:</b> <span id="SubTotal"></span></p>
-       <p style="text-align: right;"><b>I.V.A:</b> <span id="SubTotal"></span></p>
+       <p style="text-align: right;"><b>I.V.A:</b> <span id="IVA"></span></p>
       <p style="text-align: right;"><b>Flete:</b> <span id="Flete"></span></p>
       <p style="text-align: right;"><b>Descuento:</b> <span id="Descuento"></span></p>
       <p style="text-align: right;"><b>Total:</b> <span id="Total"></span></p>
@@ -252,6 +252,7 @@
     const TotalArticulos = params.get('TotalArticulos') || "0";
     const DetalleVenta = params.get('DetalleVenta') || "No hay ventas";
     const SubTotal = params.get('SubTotal') || "$0.00";
+    const IVA = params.get('IVA') || "$0.00";
     const Flete = params.get('Flete') || " $0.00";
     const Descuento = params.get('Descuento') || "$0.00";
     const Total = params.get('Total') || "$0.00";
@@ -272,6 +273,7 @@
     document.getElementById("TotalArticulos").textContent = TotalArticulos;
     document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
     document.getElementById("SubTotal").textContent = SubTotal;
+    document.getElementById("IVA").textContent = IVA;
     document.getElementById("Flete").textContent = Flete;
     document.getElementById("Descuento").textContent = Descuento;
     document.getElementById("Total").textContent = Total;
