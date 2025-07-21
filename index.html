@@ -1,159 +1,131 @@
-<!-- El mismo HTML de antes, solo muestro la parte corregida del script -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ticket de Venta</title>
+  <style>
+    body {
+      font-family: monospace;
+      margin: 0;
+      padding: 20px;
+      width: 300px;
+    }
+    .center {
+      text-align: center;
+    }
+    .bold {
+      font-weight: bold;
+    }
+    .separator {
+      border-top: 1px dashed #000;
+      margin: 10px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    td {
+      padding: 2px 0;
+      word-wrap: break-word;
+    }
+    .footer {
+      margin-top: 15px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="center bold">
+    <div id="representante">NOMBRE DE EMPRESA</div>
+    <div id="ciudad">Ciudad</div>
+    <div id="direccion">Dirección</div>
+    <div id="telefono">Teléfono</div>
+    <div id="nit">NIT</div>
+  </div>
 
-<script>
-  // Obtener los parámetros de la URL
-  const params = new URLSearchParams(window.location.search);
+  <div class="separator"></div>
 
-  const representante = params.get('representante') || "No especificado";
-  const ciudad = params.get('ciudad') || "No especificada";
-  const Nit = params.get('Nit') || "No especificado";  
-  const telefono = params.get('telefono') || "No especificado";  
-  const direccion = params.get('direccion') || "No especificada"; 
-  const NoTicket = params.get('NoTicket') || "No especificado"; 
-  const FechaHora = params.get('FechaHora') || "No especificada";
-  const Identificacion = params.get('Identificacion') || "No especificada";
-  const cliente = params.get('cliente') || "No especificado"; 
-  const FormaPago = params.get('FormaPago') || "No especificado";
-  const TotalArticulos = params.get('TotalArticulos') || "0";
-  const DetalleVenta = params.get('DetalleVenta') || "No hay ventas";
-  const SubTotal = params.get('SubTotal') || "$0.00";
-  const Flete = params.get('Flete') || " $0.00";
-  const Descuento = params.get('Descuento') || "$0.00";
-  const Total = params.get('Total') || "$0.00";
-  const Efectivo = params.get('Efectivo') || "$0.00";
-  const Cambio = params.get('Cambio') || "$0.00";
+  <div>
+    <div><span class="bold">Cliente:</span> <span id="cliente">---</span></div>
+    <div><span class="bold">Identificación:</span> <span id="Identificacion">---</span></div>
+    <div><span class="bold">Ticket N°:</span> <span id="NoTicket">---</span></div>
+    <div><span class="bold">Fecha y Hora:</span> <span id="FechaHora">---</span></div>
+    <div><span class="bold">Forma de pago:</span> <span id="FormaPago">---</span></div>
+  </div>
 
-  // Mostrar en el HTML
-  document.getElementById("representante").textContent = representante;
-  document.getElementById("Nit").textContent = Nit;
-  document.getElementById("telefono").textContent = telefono;
-  document.getElementById("direccion").textContent = direccion;
-  document.getElementById("ciudad").textContent = ciudad;
-  document.getElementById("NoTicket").textContent = NoTicket;
-  document.getElementById("FechaHora").textContent = FechaHora;
-  document.getElementById("Identificacion").textContent = Identificacion;
-  document.getElementById("cliente").textContent = cliente;
-  document.getElementById("FormaPago").textContent = FormaPago;
-  document.getElementById("TotalArticulos").textContent = TotalArticulos;
-  document.getElementById("DetalleVenta").innerHTML = DetalleVenta;
-  document.getElementById("SubTotal").textContent = SubTotal;
-  document.getElementById("Flete").textContent = Flete;
-  document.getElementById("Descuento").textContent = Descuento;
-  document.getElementById("Total").textContent = Total;
-  document.getElementById("Efectivo").textContent = Efectivo;
-  document.getElementById("Cambio").textContent = Cambio;
+  <div class="separator"></div>
 
-  if (FormaPago.toLowerCase() === "transferencia") {
-    document.getElementById("Efectivo").style.display = "none";
-    document.getElementById("Cambio").style.display = "none";
-  }
+  <table>
+    <thead>
+      <tr>
+        <td><strong>Cant</strong></td>
+        <td><strong>Detalle</strong></td>
+        <td><strong>Vr.Unit</strong></td>
+        <td><strong>Total</strong></td>
+      </tr>
+    </thead>
+    <tbody id="DetalleVenta">
+      <!-- Se llenará dinámicamente -->
+    </tbody>
+  </table>
 
-  // Compartir PDF
-  document.getElementById('btnCompartir').addEventListener('click', function () {
-    const btnCompartir = document.getElementById('btnCompartir');
-    const ticketElement = document.querySelector('.ticket');
+  <div class="separator"></div>
 
-    btnCompartir.classList.add('generating');
-    btnCompartir.title = 'Generando PDF...';
+  <div class="center bold">
+    Total artículos: <span id="TotalArticulos">0</span>
+  </div>
 
-    html2canvas(ticketElement, {
-      scale: 3,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      width: ticketElement.scrollWidth,
-      height: ticketElement.scrollHeight
-    }).then(function (canvas) {
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: [80, 150]
+  <div class="separator"></div>
+
+  <div class="center footer">
+    ¡Gracias por tu compra!<br>
+    Síguenos en nuestras redes sociales
+  </div>
+
+  <script>
+    function getParams() {
+      const params = {};
+      const queryString = window.location.search.substring(1);
+      const pairs = queryString.split("&");
+
+      for (let pair of pairs) {
+        const [key, value] = pair.split("=");
+        if (!key) continue;
+        const decodedKey = decodeURIComponent(key.trim());
+        const decodedValue = decodeURIComponent((value || "").replace(/\+/g, " ").trim());
+
+        if (decodedKey === "DetalleVenta") {
+          params[decodedKey] = decodedValue;
+        } else {
+          params[decodedKey] = decodedValue.replace(/\+/g, " ");
+        }
+      }
+
+      return params;
+    }
+
+    function fillData() {
+      const data = getParams();
+      const ids = ["representante", "ciudad", "direccion", "telefono", "nit", "cliente", "Identificacion", "NoTicket", "FechaHora", "FormaPago", "TotalArticulos"];
+
+      ids.forEach(id => {
+        if (data[id]) {
+          document.getElementById(id).innerText = data[id];
+        }
       });
 
-      const imgData = canvas.toDataURL('image/png');
-      const imgWidth = 75;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      if (imgHeight > 145) {
-        pdf.internal.pageSize.height = imgHeight + 5;
+      if (data.DetalleVenta) {
+        document.getElementById("DetalleVenta").innerHTML = data.DetalleVenta;
       }
+    }
 
-      pdf.addImage(imgData, 'PNG', 2.5, 2.5, imgWidth, imgHeight);
-
-      const nombreCliente = cliente.replace(/[^a-zA-Z0-9]/g, '_');
-      const nombreCiudad = ciudad.replace(/[^a-zA-Z0-9]/g, '_');
-      const nombreArchivo = `${nombreCliente}_PVC_${nombreCiudad}.pdf`;
-
-      const pdfBlob = pdf.output('blob');
-      const file = new File([pdfBlob], nombreArchivo, { type: "application/pdf" });
-
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({
-          files: [file],
-          title: `Ticket ${cliente} - PVC ${ciudad}`,
-          text: `Comprobante de compra - Cliente: ${cliente}, Ciudad: ${ciudad}`
-        })
-        .then(() => {
-          btnCompartir.classList.remove('generating');
-          btnCompartir.classList.add('success');
-          btnCompartir.title = '¡Compartido!';
-          setTimeout(() => {
-            btnCompartir.classList.remove('success');
-            btnCompartir.title = 'Compartir PDF';
-          }, 2000);
-        })
-        .catch((error) => {
-          console.error('Error al compartir PDF:', error);
-          manejarErrorCompartir(pdf, nombreArchivo, btnCompartir);
-        });
-      } else {
-        manejarErrorCompartir(pdf, nombreArchivo, btnCompartir);
-      }
-    }).catch(function (error) {
-      console.error('Error al generar PDF:', error);
-      btnCompartir.classList.remove('generating');
-      btnCompartir.classList.add('error');
-      btnCompartir.title = 'Error al generar PDF';
+    window.onload = function () {
+      fillData();
       setTimeout(() => {
-        btnCompartir.classList.remove('error');
-        btnCompartir.title = 'Compartir PDF';
-      }, 3000);
-    });
-  });
-
-  function manejarErrorCompartir(pdf, nombreArchivo, btnCompartir) {
-    pdf.save(nombreArchivo);
-    btnCompartir.classList.remove('generating');
-    btnCompartir.classList.add('success');
-    btnCompartir.title = 'PDF descargado';
-
-    setTimeout(() => {
-      const mensaje = `🧾 *COMPROBANTE PVC - ${ciudad.toUpperCase()}*
-
-📋 Ticket: ${NoTicket}
-👤 Cliente: ${cliente}
-📅 Fecha: ${FechaHora}
-💰 Total: ${Total}
-💳 Pago: ${FormaPago}
-🏙️ Ciudad: ${ciudad}
-
-✅ Ticket generado para ${cliente}
-📄 PDF: ${nombreArchivo}
-
-Gracias por tu compra en Cielo Razos PVC`;
-
-      if (confirm('PDF descargado. ¿Deseas compartir los detalles por WhatsApp?')) {
-        const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
-        window.open(urlWhatsApp, '_blank');
-      }
-
-      btnCompartir.classList.remove('success');
-      btnCompartir.title = 'Compartir PDF';
-    }, 1500);
-  }
-
-  // Auto impresión al cargar
-  window.onload = () => {
-    window.print();
-  };
-</script>
+        window.print();
+      }, 500);
+    };
+  </script>
+</body>
+</html>
