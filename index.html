@@ -1,92 +1,360 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Ticket Kapital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket_kapital</title>
   <style>
-    body {
+.ticket {
       font-family: monospace;
+      font-size: 12px;
       width: 280px;
-      margin: auto;
+      margin: 0 auto;
+      border: 1px solid #000;
+      padding: 10px;
+      position: relative;
     }
-    .titulo {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .centrado {
-      text-align: center;
-    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12px;
     }
+
     th, td {
-      padding: 2px 0;
+      padding: 4px;
+      border: 1px solid #ddd;
+      text-align: left;
     }
-    hr {
-      border: none;
-      border-top: 1px dashed black;
+
+    .ticket-header, .ticket-footer {
+      text-align: center;
+    }
+
+    .ticket-header h2, .ticket-footer p {
+      margin: 5px 0;
+    }
+
+    .divider {
+      border-top: 1px dashed #000;
       margin: 10px 0;
     }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+    }
+
+    .item span {
+      flex: 1;
+    }
+
+    .subtotal, .total {
+      font-weight: bold;
+    }
+
+    .logo {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .logo img {
+      width: 70px;
+      height: auto;
+    }
+
+    .btn-compartir {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      background: #007BFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .btn-compartir:hover {
+      background: #0056b3;
+      transform: scale(1.1);
+    }
+
+    .btn-compartir.generating {
+      background: #ffc107;
+      animation: pulse 1s infinite;
+    }
+
+    .btn-compartir.success {
+      background: #28a745;
+    }
+
+    .btn-compartir.error {
+      background: #dc3545;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .btn-compartir img {
+      width: 20px;
+      height: 20px;
+      filter: brightness(0) invert(1);
+    }
+
+    /* Ocultar botón al imprimir */
+    @media print {
+      .btn-compartir {
+        display: none !important;
+      }
+    }
+
   </style>
 </head>
-<body onload="window.print()">
+<body>
+  <div class="ticket">
+    <div class="btn-compartir" id="btnCompartir" title="Compartir PDF">
+      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
+    </div>
 
-  <div class="titulo">KAPITAL PVC</div>
-  <div class="centrado">NIT: <span id="Nit"></span></div>
-  <div class="centrado">Tel: <span id="telefono"></span></div>
-  <div class="centrado">Dirección: <span id="direccion"></span></div>
-  <div class="centrado">Ciudad: <span id="ciudad"></span></div>
-  <hr>
+    <div class="ticket-header">
+      <h2>Cielo Razos</h2>
+      <h2>PVC</h2>
+      <h3 id="ciudad">Ciudad no especificada</h3>
+    </div>
 
-  <div><b>Cliente:</b> <span id="cliente"></span></div>
-  <div><b>ID:</b> <span id="Identificacion"></span></div>
-  <div><b>Forma de pago:</b> <span id="FormaPago"></span></div>
-  <div><b>Fecha:</b> <span id="FechaHora"></span></div>
-  <div><b>Representante:</b> <span id="representante"></span></div>
-  <hr>
+    <div class="logo">
+      <img src="https://www.appsheet.com/Content/img/appicons/other.png" alt="Logo">
+    </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Cant</th>
-        <th>Descripción</th>
-        <th>Vlr.Unit</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody id="detalle-venta">
-      <!-- Aquí se insertarán las filas dinámicamente -->
-    </tbody>
-  </table>
-  <hr>
+    <div class="ticket-header">
+      <h3 id="representante">No especificado</h3>
+      <div><b>Nit:</b></div>
+        <div id="Nit"></div>
+      <div><b>Telefono</b></div>
+      <div id="telefono"></div>
+      <div><b>Dirección</b></div> 
+      <div id="direccion"></div>
+    </div>
 
-  <div><b>Total Artículos:</b> <span id="TotalArticulos"></span></div>
+    <div class="divider"></div>
+
+    <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
+      <div><b>Fecha y Hora:</b> <span id="FechaHora"></span></div>
+      <div><b>No.Ticket:</b> <span id="NoTicket"></span></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="ticket-items">
+      <div class="item">
+        <span><b>NIT-Cedula:</b></span> <span id="Identificacion"></span>
+      </div>
+      <div class="item">
+        <span><b>Cliente:</b></span> <span id="cliente"></span>
+      </div>
+      <div class="item">
+        <span><b>Método de pago:</b></span> <span id="FormaPago"></span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: left;">Cnt.</th>
+          <th>Art.</th>
+          <th style="text-align: right;">V Unt.</th>
+          <th style="text-align: right;">Total</th>
+        </tr>
+      </thead>
+      <tbody id="DetalleVenta"></tbody>
+    </table>
+<br>
+    <div class="item">
+       <span><b>Total Artículos:</b></span><span id="TotalArticulos"></span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="ticket-footer">
+      <p style="text-align: right;"><b>SubTotal:</b> <span id="SubTotal"></span></p>
+      <p style="text-align: right;"><b>Flete:</b> <span id="Flete"></span></p>
+      <p style="text-align: right;"><b>Descuento:</b> <span id="Descuento"></span></p>
+      <p style="text-align: right;"><b>Total:</b> <span id="Total"></span></p>
+      <p style="text-align: right;"><b>Efectivo:</b> <span id="Efectivo"></span></p>
+      <p style="text-align: right;"><b>Cambio:</b> <span id="Cambio"></span></p>
+
+      <h5>Gracias por tu compra.</h5>
+      <p>Por favor, guarda este ticket como comprobante de compra. Para cualquier cambio o devolución, será necesario presentar este ticket junto con los productos en su estado original y dentro del plazo establecido en nuestra política de cambios y devoluciones.</p>
+      <p>Para cualquier consulta o asistencia adicional, no dudes en contactarnos. Agradecemos tu preferencia y esperamos que disfrutes de tu compra.</p>
+    </div>
+  </div>
+
+  <!-- Librerías CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
-    // Obtener parámetros de la URL
-    const params = new URLSearchParams(window.location.search);
+   <script>
+  // Obtener parámetros desde la URL
+  const params = new URLSearchParams(window.location.search);
 
-    // Insertar los valores en el HTML
-    document.getElementById("cliente").textContent = decodeURIComponent(params.get("cliente") || "");
-    document.getElementById("Identificacion").textContent = decodeURIComponent(params.get("Identificacion") || "");
-    document.getElementById("FormaPago").textContent = decodeURIComponent(params.get("FormaPago") || "");
-    document.getElementById("FechaHora").textContent = decodeURIComponent(params.get("FechaHora") || "");
-    document.getElementById("representante").textContent = decodeURIComponent(params.get("representante") || "");
-    document.getElementById("Nit").textContent = decodeURIComponent(params.get("Nit") || "");
-    document.getElementById("telefono").textContent = decodeURIComponent(params.get("telefono") || "");
-    document.getElementById("direccion").textContent = decodeURIComponent(params.get("direccion") || "");
-    document.getElementById("ciudad").textContent = decodeURIComponent(params.get("ciudad") || "");
-    document.getElementById("TotalArticulos").textContent = decodeURIComponent(params.get("TotalArticulos") || "");
+  // Lista de IDs que se llenarán directamente
+  const campos = [
+    'fechaPago', 'cliente', 'telefono', 'direccion', 'fechaDesde', 'fechaHasta',
+    'MetodoPago', 'Nmes', 'ValorUni', 'TValorAlquiler', 'ValorDepo',
+    'TotalPagar', 'ProximoPago', 'boleto', 'nombreArrendatario', 'desde', 'hasta',
+    'nit_cedula', 'mes', 'valor', 'abono', 'cancelar', 'totalPagar',
+    'valorPrestamo', 'valorAbono', 'saldoPendiente', 'proximoPago'
+  ];
 
-    // Insertar detalle de venta
-    const detalleVenta = decodeURIComponent(params.get("DetalleVenta") || "");
-    if (detalleVenta) {
-      document.getElementById("detalle-venta").innerHTML = detalleVenta;
+  // Llenar cada campo si existe un elemento con ese ID
+  campos.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      const valor = params.get(id) || "No especificado";
+      el.textContent = decodeURIComponent(valor);
     }
+  });
+</script>
+    // Condición para ocultar Efectivo y Cambio si la forma de pago es transferencia
+    if (FormaPago.toLowerCase() === "transferencia") {
+      document.getElementById("Efectivo").style.display = "none";
+      document.getElementById("Cambio").style.display = "none";
+    }
+
+    // Función para compartir PDF
+    document.getElementById('btnCompartir').addEventListener('click', function() {
+        const btnCompartir = document.getElementById('btnCompartir');
+        const ticketElement = document.querySelector('.ticket');
+        
+        // Cambiar estado del botón
+        btnCompartir.classList.add('generating');
+        btnCompartir.title = 'Generando PDF...';
+        
+        html2canvas(ticketElement, {
+            scale: 3, // Mayor calidad
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            width: ticketElement.scrollWidth,
+            height: ticketElement.scrollHeight
+        }).then(function(canvas) {
+            const { jsPDF } = window.jspdf;
+            
+            // Crear PDF en formato ticket (80mm de ancho)
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: [80, 150] // Ancho fijo, alto ajustable
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = 75; // Ancho del ticket menos márgenes
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            // Ajustar el tamaño del PDF según el contenido
+            if (imgHeight > 145) {
+                pdf.internal.pageSize.height = imgHeight + 5;
+            }
+
+            pdf.addImage(imgData, 'PNG', 2.5, 2.5, imgWidth, imgHeight);
+            
+            // Crear nombre del archivo con cliente y ciudad
+            const nombreCliente = cliente.replace(/[^a-zA-Z0-9]/g, '_');
+            const nombreCiudad = ciudad.replace(/[^a-zA-Z0-9]/g, '_');
+            const nombreArchivo = ${nombreCliente}_PVC_${nombreCiudad}.pdf;
+            
+            // Crear blob del PDF
+            const pdfBlob = pdf.output('blob');
+            const file = new File([pdfBlob], nombreArchivo, { type: "application/pdf" });
+
+            // Intentar compartir usando Web Share API
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file],
+                    title: Ticket ${cliente} - PVC ${ciudad},
+                    text: Comprobante de compra - Cliente: ${cliente}, Ciudad: ${ciudad}
+                })
+                .then(() => {
+                    console.log('PDF compartido correctamente');
+                    btnCompartir.classList.remove('generating');
+                    btnCompartir.classList.add('success');
+                    btnCompartir.title = '¡Compartido!';
+                    
+                    setTimeout(() => {
+                        btnCompartir.classList.remove('success');
+                        btnCompartir.title = 'Compartir PDF';
+                    }, 2000);
+                })
+                .catch((error) => {
+                    console.log('Error al compartir PDF:', error);
+                    manejarErrorCompartir(pdf, nombreArchivo, btnCompartir);
+                });
+            } else {
+                // Fallback: descargar PDF
+                manejarErrorCompartir(pdf, nombreArchivo, btnCompartir);
+            }
+        }).catch(function(error) {
+            console.error('Error al generar PDF:', error);
+            btnCompartir.classList.remove('generating');
+            btnCompartir.classList.add('error');
+            btnCompartir.title = 'Error al generar PDF';
+            
+            setTimeout(() => {
+                btnCompartir.classList.remove('error');
+                btnCompartir.title = 'Compartir PDF';
+            }, 3000);
+        });
+    });
+
+    // Función para manejar errores o fallback
+    function manejarErrorCompartir(pdf, nombreArchivo, btnCompartir) {
+        // Descargar el PDF
+        pdf.save(nombreArchivo);
+        
+        btnCompartir.classList.remove('generating');
+        btnCompartir.classList.add('success');
+        btnCompartir.title = 'PDF descargado';
+        
+        // Mostrar opción de WhatsApp
+        setTimeout(() => {
+            const mensaje = 🧾 *COMPROBANTE PVC - ${ciudad.toUpperCase()}*
+            
+📋 Ticket: ${NoTicket}
+👤 Cliente: ${cliente}
+📅 Fecha: ${FechaHora}
+💰 Total: ${Total}
+💳 Pago: ${FormaPago}
+🏙️ Ciudad: ${ciudad}
+
+✅ Ticket generado para ${cliente}
+📄 PDF: ${nombreArchivo}
+
+Gracias por tu compra en Cielo Razos PVC;
+
+            if (confirm('PDF descargado. ¿Deseas compartir los detalles por WhatsApp?')) {
+                const urlWhatsApp = https://wa.me/?text=${encodeURIComponent(mensaje)};
+                window.open(urlWhatsApp, '_blank');
+            }
+            
+            btnCompartir.classList.remove('success');
+            btnCompartir.title = 'Compartir PDF';
+        }, 1500);
+    }
+
+    // Auto-print al cargar
+    window.onload = () => {
+        window.print();
+    };
   </script>
 </body>
 </html>
-
