@@ -1,144 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ticket de Venta</title>
+  <meta charset="UTF-8">
+  <title>Ticket Kapital</title>
   <style>
     body {
-      font-family: "Courier New", Courier, monospace;
-      margin: 0;
-      padding: 20px;
-      background: white;
-      font-size: 12px;
-    }
-
-    .ticket {
-      max-width: 280px;
+      font-family: monospace;
+      width: 280px;
       margin: auto;
     }
-
-    h2, h3 {
+    .titulo {
       text-align: center;
-      margin: 5px 0;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      text-align: left;
-      padding: 4px;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    .totales {
-      margin-top: 10px;
-    }
-
-    .totales td {
+      font-size: 18px;
       font-weight: bold;
     }
-
     .centrado {
       text-align: center;
     }
-
-    .footer {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 10px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
     }
-
+    th, td {
+      padding: 2px 0;
+    }
     hr {
       border: none;
-      border-top: 1px dashed #000;
+      border-top: 1px dashed black;
       margin: 10px 0;
     }
   </style>
 </head>
-<body onload="autoPrint()">
-  <div class="ticket">
-    <h2 id="representante">Tienda</h2>
-    <div class="centrado">
-      <div id="ciudad"></div>
-      <div id="direccion"></div>
-      <div id="telefono"></div>
-      <div id="Nit"></div>
-    </div>
-    <hr>
-    <div><b>Cliente:</b> <span id="cliente"></span></div>
-    <div><b>ID:</b> <span id="Identificacion"></span></div>
-    <div><b>Fecha:</b> <span id="FechaHora"></span></div>
-    <div><b>No. Ticket:</b> <span id="NoTicket"></span></div>
-    <hr>
-    <table>
-      <thead>
-        <tr>
-          <th>Cant</th>
-          <th>Descripción</th>
-          <th>Vr</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody id="DetalleVenta">
-        <!-- Se insertan los productos aquí -->
-      </tbody>
-    </table>
-    <hr>
-    <table class="totales">
+<body onload="window.print()">
+
+  <div class="titulo">KAPITAL PVC</div>
+  <div class="centrado">NIT: <span id="Nit"></span></div>
+  <div class="centrado">Tel: <span id="telefono"></span></div>
+  <div class="centrado">Dirección: <span id="direccion"></span></div>
+  <div class="centrado">Ciudad: <span id="ciudad"></span></div>
+  <hr>
+
+  <div><b>Cliente:</b> <span id="cliente"></span></div>
+  <div><b>ID:</b> <span id="Identificacion"></span></div>
+  <div><b>Forma de pago:</b> <span id="FormaPago"></span></div>
+  <div><b>Fecha:</b> <span id="FechaHora"></span></div>
+  <div><b>Representante:</b> <span id="representante"></span></div>
+  <hr>
+
+  <table>
+    <thead>
       <tr>
-        <td>Total artículos:</td>
-        <td id="TotalArticulos" class="centrado"></td>
+        <th>Cant</th>
+        <th>Descripción</th>
+        <th>Vlr.Unit</th>
+        <th>Total</th>
       </tr>
-      <tr>
-        <td>Forma de pago:</td>
-        <td id="FormaPago" class="centrado"></td>
-      </tr>
-    </table>
-    <hr>
-    <div class="footer">
-      ¡Gracias por tu compra!
-    </div>
-  </div>
+    </thead>
+    <tbody id="detalle-venta">
+      <!-- Aquí se insertarán las filas dinámicamente -->
+    </tbody>
+  </table>
+  <hr>
+
+  <div><b>Total Artículos:</b> <span id="TotalArticulos"></span></div>
 
   <script>
-    function getParameterByName(name) {
-      name = name.replace(/[\[\]]/g, '\\$&');
-      const url = window.location.href;
-      const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-      const results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
+    // Obtener parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
 
-    function autoPrint() {
-      const campos = [
-        "representante", "ciudad", "direccion", "telefono", "Nit",
-        "cliente", "Identificacion", "FechaHora", "NoTicket",
-        "TotalArticulos", "FormaPago"
-      ];
+    // Insertar los valores en el HTML
+    document.getElementById("cliente").textContent = decodeURIComponent(params.get("cliente") || "");
+    document.getElementById("Identificacion").textContent = decodeURIComponent(params.get("Identificacion") || "");
+    document.getElementById("FormaPago").textContent = decodeURIComponent(params.get("FormaPago") || "");
+    document.getElementById("FechaHora").textContent = decodeURIComponent(params.get("FechaHora") || "");
+    document.getElementById("representante").textContent = decodeURIComponent(params.get("representante") || "");
+    document.getElementById("Nit").textContent = decodeURIComponent(params.get("Nit") || "");
+    document.getElementById("telefono").textContent = decodeURIComponent(params.get("telefono") || "");
+    document.getElementById("direccion").textContent = decodeURIComponent(params.get("direccion") || "");
+    document.getElementById("ciudad").textContent = decodeURIComponent(params.get("ciudad") || "");
+    document.getElementById("TotalArticulos").textContent = decodeURIComponent(params.get("TotalArticulos") || "");
 
-      campos.forEach(campo => {
-        const valor = getParameterByName(campo);
-        if (valor !== null) {
-          document.getElementById(campo).innerText = valor;
-        }
-      });
-
-      const detalle = getParameterByName("DetalleVenta");
-      if (detalle) {
-        document.getElementById("DetalleVenta").innerHTML = detalle;
-      }
-
-      setTimeout(() => window.print(), 500);
+    // Insertar detalle de venta
+    const detalleVenta = decodeURIComponent(params.get("DetalleVenta") || "");
+    if (detalleVenta) {
+      document.getElementById("detalle-venta").innerHTML = detalleVenta;
     }
   </script>
 </body>
