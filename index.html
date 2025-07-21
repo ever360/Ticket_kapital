@@ -1,131 +1,146 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ticket de Venta</title>
   <style>
     body {
-      font-family: monospace;
+      font-family: "Courier New", Courier, monospace;
       margin: 0;
       padding: 20px;
-      width: 300px;
+      background: white;
+      font-size: 12px;
     }
-    .center {
+
+    .ticket {
+      max-width: 280px;
+      margin: auto;
+    }
+
+    h2, h3 {
       text-align: center;
+      margin: 5px 0;
     }
-    .bold {
-      font-weight: bold;
-    }
-    .separator {
-      border-top: 1px dashed #000;
-      margin: 10px 0;
-    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
+      margin-top: 10px;
     }
-    td {
-      padding: 2px 0;
-      word-wrap: break-word;
+
+    th, td {
+      text-align: left;
+      padding: 4px;
     }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .totales {
+      margin-top: 10px;
+    }
+
+    .totales td {
+      font-weight: bold;
+    }
+
+    .centrado {
+      text-align: center;
+    }
+
     .footer {
-      margin-top: 15px;
-      font-size: 12px;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 10px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px dashed #000;
+      margin: 10px 0;
     }
   </style>
 </head>
-<body>
-  <div class="center bold">
-    <div id="representante">NOMBRE DE EMPRESA</div>
-    <div id="ciudad">Ciudad</div>
-    <div id="direccion">Dirección</div>
-    <div id="telefono">Teléfono</div>
-    <div id="nit">NIT</div>
-  </div>
-
-  <div class="separator"></div>
-
-  <div>
-    <div><span class="bold">Cliente:</span> <span id="cliente">---</span></div>
-    <div><span class="bold">Identificación:</span> <span id="Identificacion">---</span></div>
-    <div><span class="bold">Ticket N°:</span> <span id="NoTicket">---</span></div>
-    <div><span class="bold">Fecha y Hora:</span> <span id="FechaHora">---</span></div>
-    <div><span class="bold">Forma de pago:</span> <span id="FormaPago">---</span></div>
-  </div>
-
-  <div class="separator"></div>
-
-  <table>
-    <thead>
+<body onload="autoPrint()">
+  <div class="ticket">
+    <h2 id="representante">Tienda</h2>
+    <div class="centrado">
+      <div id="ciudad"></div>
+      <div id="direccion"></div>
+      <div id="telefono"></div>
+      <div id="Nit"></div>
+    </div>
+    <hr>
+    <div><b>Cliente:</b> <span id="cliente"></span></div>
+    <div><b>ID:</b> <span id="Identificacion"></span></div>
+    <div><b>Fecha:</b> <span id="FechaHora"></span></div>
+    <div><b>No. Ticket:</b> <span id="NoTicket"></span></div>
+    <hr>
+    <table>
+      <thead>
+        <tr>
+          <th>Cant</th>
+          <th>Descripción</th>
+          <th>Vr</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="DetalleVenta">
+        <!-- Se insertan los productos aquí -->
+      </tbody>
+    </table>
+    <hr>
+    <table class="totales">
       <tr>
-        <td><strong>Cant</strong></td>
-        <td><strong>Detalle</strong></td>
-        <td><strong>Vr.Unit</strong></td>
-        <td><strong>Total</strong></td>
+        <td>Total artículos:</td>
+        <td id="TotalArticulos" class="centrado"></td>
       </tr>
-    </thead>
-    <tbody id="DetalleVenta">
-      <!-- Se llenará dinámicamente -->
-    </tbody>
-  </table>
-
-  <div class="separator"></div>
-
-  <div class="center bold">
-    Total artículos: <span id="TotalArticulos">0</span>
-  </div>
-
-  <div class="separator"></div>
-
-  <div class="center footer">
-    ¡Gracias por tu compra!<br>
-    Síguenos en nuestras redes sociales
+      <tr>
+        <td>Forma de pago:</td>
+        <td id="FormaPago" class="centrado"></td>
+      </tr>
+    </table>
+    <hr>
+    <div class="footer">
+      ¡Gracias por tu compra!
+    </div>
   </div>
 
   <script>
-    function getParams() {
-      const params = {};
-      const queryString = window.location.search.substring(1);
-      const pairs = queryString.split("&");
-
-      for (let pair of pairs) {
-        const [key, value] = pair.split("=");
-        if (!key) continue;
-        const decodedKey = decodeURIComponent(key.trim());
-        const decodedValue = decodeURIComponent((value || "").replace(/\+/g, " ").trim());
-
-        if (decodedKey === "DetalleVenta") {
-          params[decodedKey] = decodedValue;
-        } else {
-          params[decodedKey] = decodedValue.replace(/\+/g, " ");
-        }
-      }
-
-      return params;
+    function getParameterByName(name) {
+      name = name.replace(/[\[\]]/g, '\\$&');
+      const url = window.location.href;
+      const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+      const results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    function fillData() {
-      const data = getParams();
-      const ids = ["representante", "ciudad", "direccion", "telefono", "nit", "cliente", "Identificacion", "NoTicket", "FechaHora", "FormaPago", "TotalArticulos"];
+    function autoPrint() {
+      const campos = [
+        "representante", "ciudad", "direccion", "telefono", "Nit",
+        "cliente", "Identificacion", "FechaHora", "NoTicket",
+        "TotalArticulos", "FormaPago"
+      ];
 
-      ids.forEach(id => {
-        if (data[id]) {
-          document.getElementById(id).innerText = data[id];
+      campos.forEach(campo => {
+        const valor = getParameterByName(campo);
+        if (valor !== null) {
+          document.getElementById(campo).innerText = valor;
         }
       });
 
-      if (data.DetalleVenta) {
-        document.getElementById("DetalleVenta").innerHTML = data.DetalleVenta;
+      const detalle = getParameterByName("DetalleVenta");
+      if (detalle) {
+        document.getElementById("DetalleVenta").innerHTML = detalle;
       }
-    }
 
-    window.onload = function () {
-      fillData();
-      setTimeout(() => {
-        window.print();
-      }, 500);
-    };
+      setTimeout(() => window.print(), 500);
+    }
   </script>
 </body>
 </html>
+
