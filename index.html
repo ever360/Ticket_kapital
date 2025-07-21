@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ticket_kapital</title>
+  <meta charset="UTF-8">
+  <title>Comprobante</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: #fff;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .ticket {
+    body {
       font-family: monospace;
       font-size: 12px;
-      width: 280px;
-      border: 1px solid #000;
+      max-width: 300px;
+      margin: 0 auto;
       padding: 10px;
-      position: relative;
-      box-sizing: border-box;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .line {
+      border-top: 1px dashed #000;
+      margin: 5px 0;
     }
 
     table {
@@ -31,186 +30,66 @@
       border-collapse: collapse;
     }
 
-    th, td {
-      padding: 4px;
-      border: 1px solid #ddd;
-      text-align: left;
+    td {
+      padding: 2px 0;
+      vertical-align: top;
     }
 
-    .ticket-header, .ticket-footer {
-      text-align: center;
+    .right {
+      text-align: right;
     }
 
-    .ticket-header h2, .ticket-footer p {
-      margin: 5px 0;
+    .item-row td {
+      border-bottom: 1px dotted #ccc;
     }
 
-    .divider {
-      border-top: 1px dashed #000;
-      margin: 10px 0;
-    }
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 3px;
-    }
-
-    .item span {
-      flex: 1;
-    }
-
-    .subtotal, .total {
-      font-weight: bold;
-    }
-
-    .logo {
-      text-align: center;
+    .footer {
       margin-top: 10px;
+      text-align: center;
     }
 
-    .logo img {
-      width: 70px;
-      height: auto;
-    }
-
-    .btn-compartir {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      background: #007BFF;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-
-    .btn-compartir:hover {
-      background: #0056b3;
-      transform: scale(1.1);
-    }
-
-    .btn-compartir.generating {
-      background: #ffc107;
-      animation: pulse 1s infinite;
-    }
-
-    .btn-compartir.success {
-      background: #28a745;
-    }
-
-    .btn-compartir.error {
-      background: #dc3545;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    .btn-compartir img {
-      width: 20px;
-      height: 20px;
-      filter: brightness(0) invert(1);
-    }
-
-    @media print {
-      @page {
-        margin: 0;
-      }
-
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-
-      .btn-compartir {
-        display: none !important;
-      }
+    .totales td {
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="ticket">
-    <div class="btn-compartir" id="btnCompartir" title="Compartir PDF">
-      <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Compartir">
-    </div>
+  <div class="center bold">COMPROBANTE DE PAGO</div>
+  <div class="center">Fecha: 09/07/2025</div>
+  <div class="center">Hora: 1:24 p. m.</div>
+  <div class="line"></div>
 
-    <div class="ticket-header">
-      <h2>Cielo Razos</h2>
-      <h2>PVC</h2>
-      <h3 id="ciudad">Ciudad no especificada</h3>
-    </div>
+  <div><strong>Cliente:</strong> Juan Pérez</div>
+  <div><strong>Ruta:</strong> 1</div>
+  <div><strong>Usuario:</strong> Vendedor1</div>
 
-    <div class="logo">
-      <img src="https://www.appsheet.com/Content/img/appicons/other.png" alt="Logo">
-    </div>
+  <div class="line"></div>
+  <table>
+    <tr class="bold">
+      <td>Concepto</td>
+      <td class="right">Valor</td>
+    </tr>
+    <tr class="item-row">
+      <td>Abono</td>
+      <td class="right">$30.000</td>
+    </tr>
+    <tr class="item-row">
+      <td>Saldo anterior</td>
+      <td class="right">$200.000</td>
+    </tr>
+    <tr class="item-row">
+      <td>Saldo actual</td>
+      <td class="right">$170.000</td>
+    </tr>
+  </table>
 
-    <div class="ticket-header">
-      <h3 id="representante">No especificado</h3>
-      <div><b>Nit:</b></div>
-      <div id="Nit"></div>
-      <div><b>Telefono</b></div>
-      <div id="telefono"></div>
-      <div><b>Dirección</b></div> 
-      <div id="direccion"></div>
-    </div>
+  <div class="line"></div>
+  <div class="center">¡Gracias por su pago!</div>
 
-    <div class="divider"></div>
-
-    <div class="ticket-header" style="text-align: right; margin-bottom: 5px;">
-      <div><b>Fecha y Hora:</b> <span id="FechaHora"></span></div>
-      <div><b>No.Ticket:</b> <span id="NoTicket"></span></div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="ticket-items">
-      <div class="item"><span><b>NIT-Cedula:</b></span> <span id="Identificacion"></span></div>
-      <div class="item"><span><b>Cliente:</b></span> <span id="cliente"></span></div>
-      <div class="item"><span><b>Método de pago:</b></span> <span id="FormaPago"></span></div>
-    </div>
-
-    <div class="divider"></div>
-
-    <table>
-      <thead>
-        <tr>
-          <th style="text-align: left;">Cnt.</th>
-          <th>Art.</th>
-          <th style="text-align: right;">V Unt.</th>
-          <th style="text-align: right;">Total</th>
-        </tr>
-      </thead>
-      <tbody id="DetalleVenta"></tbody>
-    </table>
-
-    <br>
-    <div class="item">
-      <span><b>Total Artículos:</b></span><span id="TotalArticulos"></span>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="ticket-footer">
-      <p style="text-align: right;"><b>SubTotal:</b> <span id="SubTotal"></span></p>
-      <p style="text-align: right;"><b>Flete:</b> <span id="Flete"></span></p>
-      <p style="text-align: right;"><b>Descuento:</b> <span id="Descuento"></span></p>
-      <p style="text-align: right;"><b>Total:</b> <span id="Total"></span></p>
-      <p style="text-align: right;"><b>Efectivo:</b> <span id="Efectivo"></span></p>
-      <p style="text-align: right;"><b>Cambio:</b> <span id="Cambio"></span></p>
-
-      <h5>Gracias por tu compra.</h5>
-      <p>Por favor, guarda este ticket como comprobante de compra. Para cualquier cambio o devolución, será necesario presentar este ticket junto con los productos en su estado original y dentro del plazo establecido en nuestra política de cambios y devoluciones.</p>
-      <p>Para cualquier consulta o asistencia adicional, no dudes en contactarnos. Agradecemos tu preferencia y esperamos que disfrutes de tu compra.</p>
-    </div>
-  </div>
+  <script>
+    window.onload = function () {
+      window.print();
+    };
+  </script>
 </body>
 </html>
-
