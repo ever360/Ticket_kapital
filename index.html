@@ -199,32 +199,28 @@
     </div>
   </div>
 
-  <!-- Librerías CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Botón de compartir en la parte superior izquierda -->
+    <div class="btn-compartir" id="btnCompartir">
+        <img src="https://raw.githubusercontent.com/ever360/FacAlquiler1/main/share-button-.png" alt="Botón Compartir">
+    </div>
+
+   <!-- Librería para convertir HTML a imagen -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script>
- 
-  // Obtener parámetros desde la URL
-  const params = new URLSearchParams(window.location.search);
+// Obtener los parámetros de la URL
+const params = new URLSearchParams(window.location.search);
+  
+ // Obtener los valores de los parámetros
+        var ciudad = params.has('ciudad') ? params.get('ciudad') : "ciudad no especificado";    
 
-  // Lista de IDs que se llenarán directamente
-  const campos = [
-    'fechaPago', 'cliente', 'telefono', 'direccion', 'fechaDesde', 'fechaHasta',
-    'MetodoPago', 'Nmes', 'ValorUni', 'TValorAlquiler', 'ValorDepo',
-    'TotalPagar', 'ProximoPago', 'boleto', 'nombreArrendatario', 'desde', 'hasta',
-    'nit_cedula', 'mes', 'valor', 'abono', 'cancelar', 'totalPagar',
-    'valorPrestamo', 'valorAbono', 'saldoPendiente', 'proximoPago'
-  ];
+ // Asignar valores a los campos
+        document.getElementById("ciudad").textContent = params.get('ciudad') || "ciudad no especificado";
 
-  // Llenar cada campo si existe un elemento con ese ID
-  campos.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      const valor = params.get(id) || "No especificado";
-      el.textContent = decodeURIComponent(valor);
-    }
-  });
+  // Asignar los valores a los elementos HTML
+        document.getElementById("ciudad").textContent = ciudad;
+
+    
 
     // Condición para ocultar Efectivo y Cambio si la forma de pago es transferencia
     if (FormaPago.toLowerCase() === "transferencia") {
