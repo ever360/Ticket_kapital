@@ -204,7 +204,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
-   <script>
+ 
   // Obtener parámetros desde la URL
   const params = new URLSearchParams(window.location.search);
 
@@ -225,7 +225,7 @@
       el.textContent = decodeURIComponent(valor);
     }
   });
-</script>
+
     // Condición para ocultar Efectivo y Cambio si la forma de pago es transferencia
     if (FormaPago.toLowerCase() === "transferencia") {
       document.getElementById("Efectivo").style.display = "none";
